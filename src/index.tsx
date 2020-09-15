@@ -6,12 +6,34 @@ import * as serviceWorker from './serviceWorker';
 import {
   BrowserRouter as Router,
 } from "react-router-dom";
+import { createMuiTheme, ThemeProvider } from '@material-ui/core/styles';
+
+const theme = createMuiTheme({
+  typography: {
+    fontFamily: [
+      'Montserrat',
+      'Roboto', 'Helvetica', 'Arial', 'sans-serif'  // Default Roboto typography
+    ].join(','),
+  },
+  /*palette: {
+    primary: {
+      main: '#6200ee',
+    },
+    secondary: {
+      main: '#03dac6',
+    },
+  },*/
+});
+
+console.log(theme);
 
 ReactDOM.render(
   <React.StrictMode>
-    <Router>
-      <App />
-    </Router>
+    <ThemeProvider theme={theme}>
+      <Router>
+        <App />
+      </Router>
+    </ThemeProvider>
   </React.StrictMode>,
   document.getElementById('root')
 );

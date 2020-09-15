@@ -4,7 +4,6 @@ import Home from './main/Home';
 import {
   Switch,
   Route,
-  Link as _Link,
   useLocation,
 } from "react-router-dom";
 import { makeStyles, useTheme } from '@material-ui/core/styles';
@@ -15,9 +14,7 @@ import {
   Drawer,
   IconButton,
   List,
-  ListItem,
-  ListItemIcon,
-  ListItemText, Toolbar,
+  Toolbar,
   Typography
 } from '@material-ui/core';
 import clsx from 'clsx';
@@ -32,6 +29,7 @@ import {
 import styled, {css} from 'styled-components'
 import {IconType} from "react-icons";
 import Paragraphs from "./main/Paragraphs";
+import DrawerLink from "./component/DrawerLink";
 
 
 // region ------------------------------------------------------------- Drawer layout
@@ -41,11 +39,6 @@ function setSize(e:IconType):IconType {
   `
 }
 const [FaStar, ImHome3, GrTextAlignLeft] = [_FaStar, _ImHome3, _GrTextAlignLeft].map(icon => setSize(icon));
-
-const Link = styled(_Link)`
-  color: inherit;
-  text-decoration: none;
-`;
 
 const drawerWidth = 240;
 
@@ -118,12 +111,12 @@ const App: React.FC<{}> = () => {
   const { pathname } = useLocation();
   console.log('pathname', pathname);
   const Main = styled.main`
-  flex-grow: 1;
-  
-  ${pathname !== '/starred' && css`
-    padding: 24px;
-  `}
-`;
+    flex-grow: 1;
+    
+    ${pathname !== '/starred' && css`
+      padding: 24px;
+    `}
+  `;
 
   const classes = useStyles();
   const theme = useTheme();
@@ -137,6 +130,28 @@ const App: React.FC<{}> = () => {
     setOpen(false);
   };
   // endregion
+
+  const sections = [
+    {
+      to: '/home',
+      text: 'Home',
+      icon: <ImHome3 />,
+      main: <Home />
+    },
+    {
+      to: '/paragraphs',
+      text: 'Paragraphs',
+      icon: <GrTextAlignLeft />,
+      main: <Paragraphs />
+    },
+    {
+      to: '/starred',
+      text: 'Starred',
+      icon: <FaStar />,
+      main: <Demo />
+    },
+  ];
+  defaultSection = sections[0];
 
   return (<div className={classes.root}><CssBaseline />
         <AppBar
@@ -183,60 +198,29 @@ const App: React.FC<{}> = () => {
           </div>
           <Divider />
           <List>
-            {['Home', 'Paragraphs', 'Starred'].map((text, _index) => (<>
-              {
-                text === 'Starred' ?
-                  <Link to="/starred">
-                    <ListItem button key={text}>
-
-                      <ListItemIcon>
-                        <FaStar />
-                      </ListItemIcon>
-
-                      <ListItemText primary={text} />
-                    </ListItem>
-                  </Link>
-                  : text === 'Paragraphs' ?
-                  <Link to="/paragraphs">
-                    <ListItem button key={text}>
-
-                      <ListItemIcon>
-                        <GrTextAlignLeft />
-                      </ListItemIcon>
-
-                      <ListItemText primary={text} />
-                    </ListItem>
-                  </Link>
-                  : <Link to="/home">
-                    <ListItem button key={text}>
-                      <ListItemIcon>
-                        <ImHome3 />
-                      </ListItemIcon>
-
-                      <ListItemText primary={text} />
-                    </ListItem>
-                  </Link>
-              }
-              </>))}
+            {sections.map((section, _index) => (<div key={section.text}>
+                <DrawerLink {...section} />
+            </div>))}
           </List>
         </Drawer>
 
         <Main>
           <div className={classes.toolbar} />
-
           <Switch>
-            <Route path="/home">
-              <Home />
+
+            {sections.map((section, _index) => (
+              <Route path={section.to} key={section.text}>
+                {section.main}
+              </Route>))}
+
+            <Route path='/' key={defaultSection.text}>
+              {defaultSection.main}
             </Route>
-            <Route path="/paragraphs">
-              <Paragraphs />
-            </Route>
-            <Route path="/starred">
-              <Demo />
-            </Route>
+
           </Switch>
         </Main>
   </div>);
 };
 
+export let defaultSection:any;
 export default App;
