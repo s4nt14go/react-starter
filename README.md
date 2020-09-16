@@ -20,9 +20,11 @@ Utilities included:
 
 ### Instructions
 
-1. Clone tag `1.0` and `cd` into<br /><br />
-`git clone https://github.com/s4nt14go/react-starter --branch 1.0`<br /><br />
-1. Enter in the created folder an install dependencies<br /><br />
+1. Clone the repo and `cd` into<br /><br />
+`git clone https://github.com/s4nt14go/react-starter`<br /><br />
+1. Checkout the tag you're interested in and start your own branch<br /><br />
+`git checkouwdcwt tags/1.0 -b my-branch`<br /><br />
+1. Install dependencies<br /><br />
 `npm i`<br /><br />
 1. Run the project<br /><br />
 `npm start`
