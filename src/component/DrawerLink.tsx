@@ -3,7 +3,7 @@ import {ListItem as _ListItem, ListItemIcon, ListItemText} from "@material-ui/co
 import {Link as _Link, useLocation} from "react-router-dom";
 import styled, {css} from "styled-components";
 import {useTheme} from "@material-ui/core/styles";
-import {defaultSection} from "../App";
+import {sections, defaultSection} from "../App";
 
 const Link = styled(_Link)`
   color: inherit;
@@ -20,9 +20,10 @@ const DrawerLink: React.FC<Props> = ({text, to, icon}) => {
 
   const theme = useTheme();
   const { pathname } = useLocation();
+  const pathsAvailable = sections.map(s => s.to);
 
   const ListItem = styled(_ListItem)`
-    ${(pathname === to || ('/' === pathname && to === defaultSection.to)) && css`
+    ${(pathname === to || (!pathsAvailable.includes(pathname) && to === defaultSection.to)) && css`
       background: ${theme.palette.secondary.main} !important;
     `}
   `;

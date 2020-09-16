@@ -31,14 +31,12 @@ import {IconType} from "react-icons";
 import Paragraphs from "./main/Paragraphs";
 import DrawerLink from "./component/DrawerLink";
 
-
 // region ------------------------------------------------------------- Drawer layout
 function setSize(e:IconType):IconType {
   return styled(e)`
   font-size: x-large; 
   `
 }
-const [FaStar, ImHome3, GrTextAlignLeft] = [_FaStar, _ImHome3, _GrTextAlignLeft].map(icon => setSize(icon));
 
 const drawerWidth = 240;
 
@@ -131,7 +129,9 @@ const App: React.FC<{}> = () => {
   };
   // endregion
 
-  const sections = [
+  const [FaStar, ImHome3, GrTextAlignLeft] = [_FaStar, _ImHome3, _GrTextAlignLeft].map(icon => setSize(icon));
+
+  sections = [
     {
       to: '/home',
       text: 'Home',
@@ -222,5 +222,6 @@ const App: React.FC<{}> = () => {
   </div>);
 };
 
-export let defaultSection:any;
+export let sections : Array<any>;
+export let defaultSection : any;
 export default App;
