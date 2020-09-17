@@ -25,7 +25,7 @@ const theme = createMuiTheme({
   },*/
 });
 
-console.log(theme);
+//console.log(theme);
 
 ReactDOM.render(
   <React.StrictMode>

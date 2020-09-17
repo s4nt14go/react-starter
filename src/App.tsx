@@ -25,11 +25,21 @@ import {
   FaStar as _FaStar,
   ImHome3 as _ImHome3,
   GrTextAlignLeft as _GrTextAlignLeft,
+  FaTable as _FaTable,
+  IoMdRocket as _IoMdRocket,
+  IoMdNutrition as _IoMdNutrition,
+  MdLooksOne as _MdLooksOne,
+  FaSortAmountDown as _FaSortAmountDown,
 } from "react-icons/all";
 import styled, {css} from 'styled-components'
 import {IconType} from "react-icons";
 import Paragraphs from "./main/Paragraphs";
 import DrawerLink from "./component/DrawerLink";
+import LogRocket from './main/table/LogRocket';
+import Nutrition from './main/table/Nutrition';
+import QuickStart from './main/table/QuickStart';
+import Basic from './main/table/Basic';
+import Sorting from './main/table/Sorting';
 
 // region ------------------------------------------------------------- Drawer layout
 function setSize(e:IconType):IconType {
@@ -107,7 +117,7 @@ const App: React.FC<{}> = () => {
 
   // region ------------------------------------------------------------- Drawer layout
   const { pathname } = useLocation();
-  console.log('pathname', pathname);
+  //console.log('pathname', pathname);
   const Main = styled.main`
     flex-grow: 1;
     
@@ -129,7 +139,40 @@ const App: React.FC<{}> = () => {
   };
   // endregion
 
-  const [FaStar, ImHome3, GrTextAlignLeft] = [_FaStar, _ImHome3, _GrTextAlignLeft].map(icon => setSize(icon));
+  const [FaStar, ImHome3, GrTextAlignLeft, FaTable, IoMdRocket, IoMdNutrition, MdLooksOne, FaSortAmountDown] =
+    [_FaStar, _ImHome3, _GrTextAlignLeft, _FaTable, _IoMdRocket, _IoMdNutrition, _MdLooksOne, _FaSortAmountDown].map(icon => setSize(icon));
+
+  // region ------------------------------------------------------------- LogRocket data
+  const data = [
+    { firstName: "jane", lastName: "doe", age: 20 },
+    { firstName: "john", lastName: "smith", age: 21 }
+  ];
+
+  const columns = [
+    {
+      Header: "Name",
+      columns: [
+        {
+          Header: "First Name",
+          accessor: "firstName"
+        },
+        {
+          Header: "Last Name",
+          accessor: "lastName"
+        }
+      ]
+    },
+    {
+      Header: "Other Info",
+      columns: [
+        {
+          Header: "Age",
+          accessor: "age"
+        }
+      ]
+    }
+  ];
+  // endregion
 
   sections = [
     {
@@ -149,6 +192,36 @@ const App: React.FC<{}> = () => {
       text: 'Starred',
       icon: <FaStar />,
       main: <Demo />
+    },
+    {
+      to: '/table/log-rocket',
+      text: 'LogRocket',
+      icon: <IoMdRocket />,
+      main: <LogRocket columns={columns} data={data} />
+    },
+    {
+      to: '/table/nutrition',
+      text: 'Nutrition',
+      icon: <IoMdNutrition />,
+      main: <Nutrition />
+    },
+    {
+      to: '/table/quick',
+      text: 'Quick Start',
+      icon: <FaTable />,
+      main: <QuickStart />
+    },
+    {
+      to: '/table/basic',
+      text: 'Basic',
+      icon: <MdLooksOne />,
+      main: <Basic />
+    },
+    {
+      to: '/table/sorting',
+      text: 'Sorting',
+      icon: <FaSortAmountDown />,
+      main: <Sorting />
     },
   ];
   defaultSection = sections[0];
