@@ -1,6 +1,8 @@
 import React from 'react'
 import styled from 'styled-components'
-import { useTable, useSortBy } from 'react-table'
+import { useTable, useFilters, useGlobalFilter, useAsyncDebounce } from 'react-table'
+// A great library for fuzzy filtering/sorting items
+import matchSorter from 'match-sorter'
 
 import makeData from './makeData'
 import {log} from '../../service/util';
@@ -32,75 +34,318 @@ const Styles = styled.div`
       }
     }
   }
-`;
+`
 
+// Define a default UI for filtering
+function GlobalFilter({
+                        preGlobalFilteredRows,
+                        globalFilter,
+                        setGlobalFilter,
+                      }) {
+  const count = preGlobalFilteredRows.length
+  const [value, setValue] = React.useState(globalFilter)
+  const onChange = useAsyncDebounce(value => {
+    setGlobalFilter(value || undefined)
+  }, 200)
+
+  return (
+    <span>
+      Search:{' '}
+      <input
+        value={value || ""}
+        onChange={e => {
+          setValue(e.target.value);
+          onChange(e.target.value);
+        }}
+        placeholder={`${count} records...`}
+        style={{
+          fontSize: '1.1rem',
+          border: '0',
+        }}
+      />
+    </span>
+  )
+}
+
+// Define a default UI for filtering
+function DefaultColumnFilter({
+                               column: { filterValue, preFilteredRows, setFilter },
+                             }) {
+  const count = preFilteredRows.length
+
+  return (
+    <input
+      value={filterValue || ''}
+      onChange={e => {
+        setFilter(e.target.value || undefined) // Set undefined to remove the filter entirely
+      }}
+      placeholder={`Search ${count} records...`}
+    />
+  )
+}
+
+// This is a custom filter UI for selecting
+// a unique option from a list
+function SelectColumnFilter({
+                              column: { filterValue, setFilter, preFilteredRows, id },
+                            }) {
+  // Calculate the options for filtering
+  // using the preFilteredRows
+  const options = React.useMemo(() => {
+    const options = new Set()
+    preFilteredRows.forEach(row => {
+      options.add(row.values[id])
+    })
+    log({options});
+    return [...options.values()]
+  }, [id, preFilteredRows])
+
+  // Render a multi-select box
+  return (
+    <select
+      value={filterValue}
+      onChange={e => {
+        setFilter(e.target.value || undefined)
+      }}
+    >
+      <option value="">All</option>
+      {options.map((option, i) => (
+        <option key={i} value={option}>
+          {option}
+        </option>
+      ))}
+    </select>
+  )
+}
+
+// This is a custom filter UI that uses a
+// slider to set the filter value between a column's
+// min and max values
+function SliderColumnFilter({
+                              column: { filterValue, setFilter, preFilteredRows, id },
+                            }) {
+  // Calculate the min and max
+  // using the preFilteredRows
+
+  const [min, max] = React.useMemo(() => {
+    let min = preFilteredRows.length ? preFilteredRows[0].values[id] : 0
+    let max = preFilteredRows.length ? preFilteredRows[0].values[id] : 0
+    preFilteredRows.forEach(row => {
+      min = Math.min(row.values[id], min)
+      max = Math.max(row.values[id], max)
+    })
+    return [min, max]
+  }, [id, preFilteredRows])
+
+  return (
+    <>
+      <input
+        type="range"
+        min={min}
+        max={max}
+        value={filterValue || min}
+        onChange={e => {
+          setFilter(parseInt(e.target.value, 10))
+        }}
+      />
+      <button onClick={() => setFilter(undefined)}>Off</button>
+    </>
+  )
+}
+
+// This is a custom UI for our 'between' or number range
+// filter. It uses two number boxes and filters rows to
+// ones that have values between the two
+function NumberRangeColumnFilter({
+                                   column: { filterValue = [], preFilteredRows, setFilter, id },
+                                 }) {
+  const [min, max] = React.useMemo(() => {
+    let min = preFilteredRows.length ? preFilteredRows[0].values[id] : 0
+    let max = preFilteredRows.length ? preFilteredRows[0].values[id] : 0
+    preFilteredRows.forEach(row => {
+      min = Math.min(row.values[id], min)
+      max = Math.max(row.values[id], max)
+    })
+    return [min, max]
+  }, [id, preFilteredRows])
+
+  return (
+    <div
+      style={{
+        display: 'flex',
+      }}
+    >
+      <input
+        value={filterValue[0] || ''}
+        type="number"
+        onChange={e => {
+          const val = e.target.value
+          setFilter((old = []) => [val ? parseInt(val, 10) : undefined, old[1]])
+        }}
+        placeholder={`Min (${min})`}
+        style={{
+          width: '74px',
+          marginRight: '0.5rem',
+        }}
+      />
+      to
+      <input
+        value={filterValue[1] || ''}
+        type="number"
+        onChange={e => {
+          const val = e.target.value
+          setFilter((old = []) => [old[0], val ? parseInt(val, 10) : undefined])
+        }}
+        placeholder={`Max (${max})`}
+        style={{
+          width: '74px',
+          marginLeft: '0.5rem',
+        }}
+      />
+    </div>
+  )
+}
+
+function fuzzyTextFilterFn(rows, id, filterValue) {
+  console.log('rows', rows);
+  console.log('id', id);
+  console.log('filterValue', filterValue);
+  console.log('rows[0]', rows[0]);
+  console.log('rows[0].values', rows[0].values);
+  return matchSorter(rows, filterValue, { keys: [row => row.values[id]] })
+}
+
+// Let the table remove the filter if the string is empty
+fuzzyTextFilterFn.autoRemove = val => !val
+
+// Our table component
 function Table({ columns, data }) {
+  const filterTypes = React.useMemo(
+    () => ({
+      // Add a new fuzzyTextFilterFn filter type.
+      fuzzyText: fuzzyTextFilterFn,
+      // Or, override the default text filter to use
+      // "startWith"
+      text: (rows, id, filterValue) => {
+        return rows.filter((row, i) => {
+          const rowValue = row.values[id]
+          /*if (i === 0) */console.log('row', row);
+          return rowValue !== undefined
+            ? String(rowValue)
+              .toLowerCase()
+              .startsWith(String(filterValue).toLowerCase())
+            : true
+        })
+      },
+    }),
+    []
+  )
+
+  const defaultColumn = React.useMemo(
+    () => ({
+      // Let's set up our default Filter UI
+      Filter: DefaultColumnFilter,
+    }),
+    []
+  )
+
   const {
     getTableProps,
     getTableBodyProps,
     headerGroups,
     rows,
     prepareRow,
+    state,
+    visibleColumns,
+    preGlobalFilteredRows,
+    setGlobalFilter,
   } = useTable(
     {
       columns,
       data,
+      defaultColumn, // Be sure to pass the defaultColumn option
+      filterTypes,
     },
-    useSortBy
-  );
+    useFilters, // useFilters!
+    useGlobalFilter // useGlobalFilter!
+  )
 
-  // We don't want to render all 2000 rows for this example, so cap
-  // it at 20 for this use case
-  const firstPageRows = rows.slice(0, 20);
-  log({firstPageRows});
+  // We don't want to render all of the rows for this example, so cap
+  // it for this use case
+  const firstPageRows = rows.slice(0, 10)
 
-  return (<>
-    <table {...getTableProps()}>
-      <thead>
-      {headerGroups.map(headerGroup => (
-        <tr {...headerGroup.getHeaderGroupProps()}>
-          {headerGroup.headers.map((column, i) => {
-            // Add the sorting props to control sorting. For this example
-            // we can add them into the header props
-            if (i === 0) {
-              console.log('column.getSortByToggleProps()', column.getSortByToggleProps());
-              console.log('column.getHeaderProps(column.getSortByToggleProps())', column.getHeaderProps(column.getSortByToggleProps()));
-            }
-            return <th {...column.getHeaderProps(column.getSortByToggleProps())}>
-              {column.render('Header')}
-              {/* Add a sort direction indicator */}
-              <span>
-                  {column.isSorted
-                    ? column.isSortedDesc
-                      ? ' 🔽'
-                      : ' 🔼'
-                    : ''}
-                </span>
-            </th>
-          })}
+  /*console.log('visibleColumns', visibleColumns);
+  console.log('preGlobalFilteredRows', preGlobalFilteredRows);
+  console.log('state', state);
+  console.log('setGlobalFilter', setGlobalFilter);*/
+
+  return (
+    <>
+      <table {...getTableProps()}>
+        <thead>
+        {headerGroups.map(headerGroup => (
+          <tr {...headerGroup.getHeaderGroupProps()}>
+            {headerGroup.headers.map(column => (
+              <th {...column.getHeaderProps()}>
+                {column.render('Header')}
+                {/* Render the columns filter UI */}
+                <div>{column.canFilter ? column.render('Filter') : null}</div>
+              </th>
+            ))}
+          </tr>
+        ))}
+        <tr>
+          <th
+            colSpan={visibleColumns.length}
+            style={{
+              textAlign: 'left',
+            }}
+          >
+            <GlobalFilter
+              preGlobalFilteredRows={preGlobalFilteredRows}
+              globalFilter={state.globalFilter}
+              setGlobalFilter={setGlobalFilter}
+            />
+          </th>
         </tr>
-      ))}
-      </thead>
-      <tbody {...getTableBodyProps()}>
-      {firstPageRows.map(
-        (row, _i) => {
-          prepareRow(row);
+        </thead>
+        <tbody {...getTableBodyProps()}>
+        {firstPageRows.map((row, i) => {
+          prepareRow(row)
           return (
             <tr {...row.getRowProps()}>
               {row.cells.map(cell => {
-                return (
-                  <td {...cell.getCellProps()}>{cell.render('Cell')}</td>
-                )
+                return <td {...cell.getCellProps()}>{cell.render('Cell')}</td>
               })}
             </tr>
-          )}
-      )}
-      </tbody>
-    </table>
-    <br />
-    <div>Showing the first 20 results of {rows.length} rows</div>
-    </>)
+          )
+        })}
+        </tbody>
+      </table>
+      <br />
+      <div>Showing the first 20 results of {rows.length} rows</div>
+      <div>
+        <pre>
+          <code>{JSON.stringify(state.filters, null, 2)}</code>
+        </pre>
+      </div>
+    </>
+  )
 }
+
+// Define a custom filter filter function!
+function filterGreaterThan(rows, id, filterValue) {
+  return rows.filter(row => {
+    const rowValue = row.values[id]
+    return rowValue >= filterValue
+  })
+}
+
+// This is an autoRemove method on the filter function that
+// when given the new filter value and returns true, the filter
+// will be automatically removed. Normally this is just an undefined
+// check, but here, we want to remove the filter if it's not a number
+filterGreaterThan.autoRemove = val => typeof val !== 'number'
 
 function App() {
   const columns = React.useMemo(
@@ -115,6 +360,9 @@ function App() {
           {
             Header: 'Last Name',
             accessor: 'lastName',
+            // Use our custom `fuzzyText` filter on this column
+            filter: 'fuzzyText',
+            // filter: 'text',
           },
         ],
       },
@@ -124,26 +372,34 @@ function App() {
           {
             Header: 'Age',
             accessor: 'age',
+            Filter: SliderColumnFilter,
+            filter: 'equals', // Yhe posiible options are in node_modules/react/table/src/filterTypes.js
           },
           {
             Header: 'Visits',
             accessor: 'visits',
+            Filter: NumberRangeColumnFilter,
+            filter: 'between',
           },
           {
             Header: 'Status',
             accessor: 'status',
+            Filter: SelectColumnFilter,
+            filter: 'includes',
           },
           {
             Header: 'Profile Progress',
             accessor: 'progress',
+            Filter: SliderColumnFilter,
+            filter: filterGreaterThan,
           },
         ],
       },
     ],
     []
-  );
+  )
 
-  const data = React.useMemo(() => makeData(2000), []);
+  const data = React.useMemo(() => makeData(1000), [])
 
   return (
     <Styles>

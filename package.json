@@ -15,6 +15,7 @@
     "@types/react-table": "^7.0.23",
     "@types/styled-components": "^5.1.3",
     "clsx": "^1.1.1",
+    "match-sorter": "^4.2.1",
     "namor": "^2.0.2",
     "react": "^16.13.1",
     "react-dom": "^16.13.1",

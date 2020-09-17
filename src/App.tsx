@@ -210,8 +210,8 @@ const App: React.FC<{}> = () => {
       main: <QuickStart />
     },
     {
-      to: '/table/basic',
-      text: 'Basic',
+      to: '/table/example1',
+      text: 'Example 1',
       icon: <MdLooksOne />,
       main: <Example1 />
     },
