@@ -29,7 +29,6 @@ import {
   IoMdRocket as _IoMdRocket,
   IoMdNutrition as _IoMdNutrition,
   MdLooksOne as _MdLooksOne,
-  FaSortAmountDown as _FaSortAmountDown,
 } from "react-icons/all";
 import styled, {css} from 'styled-components'
 import {IconType} from "react-icons";
@@ -38,8 +37,7 @@ import DrawerLink from "./component/DrawerLink";
 import LogRocket from './main/table/LogRocket';
 import Nutrition from './main/table/Nutrition';
 import QuickStart from './main/table/QuickStart';
-import Basic from './main/table/Basic';
-import Sorting from './main/table/Sorting';
+import Example1 from './main/table/Example1';
 
 // region ------------------------------------------------------------- Drawer layout
 function setSize(e:IconType):IconType {
@@ -139,8 +137,8 @@ const App: React.FC<{}> = () => {
   };
   // endregion
 
-  const [FaStar, ImHome3, GrTextAlignLeft, FaTable, IoMdRocket, IoMdNutrition, MdLooksOne, FaSortAmountDown] =
-    [_FaStar, _ImHome3, _GrTextAlignLeft, _FaTable, _IoMdRocket, _IoMdNutrition, _MdLooksOne, _FaSortAmountDown].map(icon => setSize(icon));
+  const [FaStar, ImHome3, GrTextAlignLeft, FaTable, IoMdRocket, IoMdNutrition, MdLooksOne] =
+    [_FaStar, _ImHome3, _GrTextAlignLeft, _FaTable, _IoMdRocket, _IoMdNutrition, _MdLooksOne].map(icon => setSize(icon));
 
   // region ------------------------------------------------------------- LogRocket data
   const data = [
@@ -215,13 +213,7 @@ const App: React.FC<{}> = () => {
       to: '/table/basic',
       text: 'Basic',
       icon: <MdLooksOne />,
-      main: <Basic />
-    },
-    {
-      to: '/table/sorting',
-      text: 'Sorting',
-      icon: <FaSortAmountDown />,
-      main: <Sorting />
+      main: <Example1 />
     },
   ];
   defaultSection = sections[0];
