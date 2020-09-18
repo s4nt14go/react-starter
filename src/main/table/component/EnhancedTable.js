@@ -22,7 +22,7 @@ import {
 } from 'react-table'
 
 const IndeterminateCheckbox = React.forwardRef(
-  ({ indeterminate, ...rest }, ref) => {
+  ({ indeterminate, total, selected, ...rest }, ref) => {
     const defaultRef = React.useRef();
     const resolvedRef = ref || defaultRef;
 
@@ -30,7 +30,6 @@ const IndeterminateCheckbox = React.forwardRef(
       resolvedRef.current.indeterminate = indeterminate
     }, [resolvedRef, indeterminate]);
 
-    const {total, selected} = rest;
     return <Checkbox ref={resolvedRef} {...rest}
                 indeterminate={selected > 0 && selected < total}
                 checked={total > 0 && selected === total} />
@@ -61,7 +60,6 @@ const EditableCell = ({
 
   // We'll only update the external data when the input is blurred
   const onBlur = () => {
-    console.log('edit onBlur', `${id}: ${value}`);
     updateMyData(index, id, value)
   };
 
@@ -143,11 +141,7 @@ const EnhancedTable = ({
           // In that case, getToggleAllRowsSelectedProps works fine.
           Header: ({ getToggleAllRowsSelectedProps }) => {
             const { rows, state: { selectedRowIds }} = instance;
-            const extra = {
-              total: rows.length,
-              selected: Object.keys(selectedRowIds).length,
-            };
-            return <IndeterminateCheckbox {...getToggleAllRowsSelectedProps()} {...extra} />
+            return <IndeterminateCheckbox {...getToggleAllRowsSelectedProps()} total={rows.length} selected={Object.keys(selectedRowIds).length} />
           },
           // The cell can use the individual row's getToggleRowSelectedProps method
           // to the render a checkbox
@@ -166,11 +160,11 @@ const EnhancedTable = ({
     setPageSize(Number(event.target.value))
   };
 
-  const removeByIndexs = (array, indexs) =>
-    array.filter((_, i) => !indexs.includes(i));
+  const removeByIndexes = (array, indexes) =>
+    array.filter((_, i) => !indexes.includes(i));
 
   const deleteUserHandler = _event => {
-    const newData = removeByIndexs(
+    const newData = removeByIndexes(
       data,
       Object.keys(selectedRowIds).map(x => parseInt(x, 10))
     );

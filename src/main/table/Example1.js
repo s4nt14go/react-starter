@@ -44,7 +44,6 @@ const App = () => {
   // the rowIndex, columnId and new value to update the
   // original data
   const updateMyData = (rowIndex, columnId, value) => {
-    console.log('updateMyData', `${columnId}: ${value}`);
     // We also turn on the flag to not reset the page
     setSkipPageReset(true);
     setData(old =>
