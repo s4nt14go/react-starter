@@ -81,9 +81,6 @@ const EditableCell = ({
 };
 
 EditableCell.propTypes = {
-  /*cell: PropTypes.shape({
-    value: PropTypes.any.isRequired,
-  }),*/
   value: PropTypes.any.isRequired,
   row: PropTypes.shape({
     index: PropTypes.number.isRequired,
