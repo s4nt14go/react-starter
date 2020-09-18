@@ -85,7 +85,7 @@ TableToolbar.propTypes = {
   deleteUserHandler: PropTypes.func.isRequired,
   setGlobalFilter: PropTypes.func.isRequired,
   preGlobalFilteredRows: PropTypes.array.isRequired,
-  globalFilter: PropTypes.string.isRequired,
+  globalFilter: PropTypes.string,
 };
 
 export default TableToolbar

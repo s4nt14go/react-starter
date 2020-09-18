@@ -42,6 +42,7 @@ const inputStyle = {
   margin: 0,
   border: 0,
   background: 'transparent',
+  outlineColor: 'hsl(0 0% 83% / 1)', /* for focus state */
 };
 
 // Create an editable cell renderer
@@ -60,6 +61,7 @@ const EditableCell = ({
 
   // We'll only update the external data when the input is blurred
   const onBlur = () => {
+    console.log('edit onBlur', `${id}: ${value}`);
     updateMyData(index, id, value)
   };
 
@@ -79,14 +81,15 @@ const EditableCell = ({
 };
 
 EditableCell.propTypes = {
-  cell: PropTypes.shape({
+  /*cell: PropTypes.shape({
     value: PropTypes.any.isRequired,
-  }),
+  }),*/
+  value: PropTypes.any.isRequired,
   row: PropTypes.shape({
     index: PropTypes.number.isRequired,
   }),
   column: PropTypes.shape({
-    id: PropTypes.number.isRequired,
+    id: PropTypes.string.isRequired,
   }),
   updateMyData: PropTypes.func.isRequired,
 };
