@@ -20,10 +20,15 @@ const DrawerLink: React.FC<Props> = ({text, to, icon}) => {
 
   const theme = useTheme();
   const { pathname } = useLocation();
+
+  let to2 = [to, to + '/']; // We should include '/<path>' and '/<path>/'
+
   const pathsAvailable = sections.map(s => s.to);
+  let pathsAvailable2: any[] = [];
+  pathsAvailable.forEach(p => pathsAvailable2 = pathsAvailable2.concat([p, p + '/']));
 
   const ListItem = styled(_ListItem)`
-    ${(pathname === to || (!pathsAvailable.includes(pathname) && to === defaultSection.to)) && css`
+    ${(to2.includes(pathname) || (!pathsAvailable2.includes(pathname) && to === defaultSection.to)) && css`
       background: ${lighten(theme.palette.secondary.light, 0.3)} !important;
     `}
   `;
