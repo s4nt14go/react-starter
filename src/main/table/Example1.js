@@ -1,104 +1,76 @@
 import React from 'react'
 
-import MaUTable from '@material-ui/core/Table'
-import TableBody from '@material-ui/core/TableBody'
-import TableCell from '@material-ui/core/TableCell'
-import TableHead from '@material-ui/core/TableHead'
-import TableRow from '@material-ui/core/TableRow'
-
-import { useTable } from 'react-table'
-
+import EnhancedTable from './component/EnhancedTable'
 import makeData from './makeData'
 
-function Table({ columns, data }) {
-  // Use the state and functions returned from useTable to build your UI
-  const { getTableProps, headerGroups, rows, prepareRow } = useTable({
-    columns,
-    data,
-  })
-
-  // Render the UI for your table
-  return (
-    <MaUTable {...getTableProps()}>
-      <TableHead>
-      {headerGroups.map(headerGroup => (
-        <TableRow {...headerGroup.getHeaderGroupProps()}>
-          {headerGroup.headers.map(column => (
-            <TableCell {...column.getHeaderProps()}>
-              {column.render('Header')}
-            </TableCell>
-          ))}
-        </TableRow>
-      ))}
-      </TableHead>
-      <TableBody>
-      {rows.map((row, i) => {
-        prepareRow(row)
-        return (
-          <TableRow {...row.getRowProps()}>
-            {row.cells.map(cell => {
-              return (
-                <TableCell {...cell.getCellProps()}>
-                  {cell.render('Cell')}
-                </TableCell>
-              )
-            })}
-          </TableRow>
-        )
-      })}
-      </TableBody>
-    </MaUTable>
-  )
-}
-
-function App() {
+const App = () => {
   const columns = React.useMemo(
     () => [
       {
-        Header: 'Name',
-        columns: [
-          {
-            Header: 'First Name',
-            accessor: 'firstName',
-          },
-          {
-            Header: 'Last Name',
-            accessor: 'lastName',
-          },
-        ],
+        Header: 'First Name',
+        accessor: 'firstName',
       },
       {
-        Header: 'Info',
-        columns: [
-          {
-            Header: 'Age',
-            accessor: 'age',
-          },
-          {
-            Header: 'Visits',
-            accessor: 'visits',
-          },
-          {
-            Header: 'Status',
-            accessor: 'status',
-          },
-          {
-            Header: 'Profile Progress',
-            accessor: 'progress',
-          },
-        ],
+        Header: 'Last Name',
+        accessor: 'lastName',
+      },
+      {
+        Header: 'Age',
+        accessor: 'age',
+      },
+      {
+        Header: 'Visits',
+        accessor: 'visits',
+      },
+      {
+        Header: 'Status',
+        accessor: 'status',
+      },
+      {
+        Header: 'Profile Progress',
+        accessor: 'progress',
       },
     ],
     []
-  )
+  );
 
-  const data = React.useMemo(() => makeData(20), [])
+  const [data, setData] = React.useState(React.useMemo(() => makeData(20), []));
+  const [skipPageReset, setSkipPageReset] = React.useState(false);
+
+  // We need to keep the table from resetting the pageIndex when we
+  // Update data. So we can keep track of that flag with a ref.
+
+  // When our cell renderer calls updateMyData, we'll use
+  // the rowIndex, columnId and new value to update the
+  // original data
+  const updateMyData = (rowIndex, columnId, value) => {
+    console.log('updateMyData', `${columnId}: ${value}`);
+    // We also turn on the flag to not reset the page
+    setSkipPageReset(true);
+    setData(old =>
+      old.map((row, index) => {
+        if (index === rowIndex) {
+          return {
+            ...old[rowIndex],
+            [columnId]: value,
+          }
+        }
+        return row
+      })
+    )
+  };
 
   return (
     <div>
-      <Table columns={columns} data={data} />
+      <EnhancedTable
+        columns={columns}
+        data={data}
+        setData={setData}
+        updateMyData={updateMyData}
+        skipPageReset={skipPageReset}
+      />
     </div>
   )
-}
+};
 
 export default App
