@@ -28,13 +28,13 @@ const theme = createMuiTheme({
 //console.log(theme);
 
 ReactDOM.render(
-  <React.StrictMode>
+  /*<React.StrictMode> react-table useRowSelect does not work in strict mode https://github.com/tannerlinsley/react-table/issues/2659 */
     <ThemeProvider theme={theme}>
       <Router>
         <App />
       </Router>
     </ThemeProvider>
-  </React.StrictMode>,
+  /*</React.StrictMode>*/,
   document.getElementById('root')
 );
 
