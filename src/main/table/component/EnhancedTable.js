@@ -30,11 +30,10 @@ const IndeterminateCheckbox = React.forwardRef(
       resolvedRef.current.indeterminate = indeterminate
     }, [resolvedRef, indeterminate]);
 
-    return (
-      <>
-        <Checkbox ref={resolvedRef} {...rest} />
-      </>
-    )
+    const {total, selected} = rest;
+    return <Checkbox ref={resolvedRef} {...rest}
+                indeterminate={selected > 0 && selected < total}
+                checked={total > 0 && selected === total} />
   }
 );
 
@@ -132,7 +131,7 @@ const EnhancedTable = ({
     usePagination,
     useRowSelect,
     hooks => {
-      hooks.allColumns.push(columns => [
+      hooks.allColumns.push((columns, { instance }) => [
         // Let's make a column for selection
         {
           id: 'selection',
@@ -142,18 +141,17 @@ const EnhancedTable = ({
           // be server side pagination.  For one, the clients should not download all
           // rows in most cases.  The client should only download data for the current page.
           // In that case, getToggleAllRowsSelectedProps works fine.
-          Header: ({ getToggleAllRowsSelectedProps }) => (
-            <div>
-              <IndeterminateCheckbox {...getToggleAllRowsSelectedProps()} />
-            </div>
-          ),
+          Header: ({ getToggleAllRowsSelectedProps }) => {
+            const { rows, state: { selectedRowIds }} = instance;
+            const extra = {
+              total: rows.length,
+              selected: Object.keys(selectedRowIds).length,
+            };
+            return <IndeterminateCheckbox {...getToggleAllRowsSelectedProps()} {...extra} />
+          },
           // The cell can use the individual row's getToggleRowSelectedProps method
           // to the render a checkbox
-          Cell: ({ row }) => (
-            <div>
-              <IndeterminateCheckbox {...row.getToggleRowSelectedProps()} />
-            </div>
-          ),
+          Cell: ({ row }) => <Checkbox {...row.getToggleRowSelectedProps()} />,
         },
         ...columns,
       ])
