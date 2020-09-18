@@ -3,7 +3,7 @@ import React from 'react'
 import EnhancedTable from './component/EnhancedTable'
 import makeData from './makeData'
 
-const App = () => {
+const Table = () => {
   const columns = React.useMemo(
     () => [
       {
@@ -72,4 +72,4 @@ const App = () => {
   )
 };
 
-export default App
+export default Table

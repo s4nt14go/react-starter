@@ -26,17 +26,11 @@ import {
   ImHome3 as _ImHome3,
   GrTextAlignLeft as _GrTextAlignLeft,
   FaTable as _FaTable,
-  IoMdRocket as _IoMdRocket,
-  IoMdNutrition as _IoMdNutrition,
-  MdLooksOne as _MdLooksOne,
 } from "react-icons/all";
 import styled, {css} from 'styled-components'
 import Paragraphs from "./main/Paragraphs";
 import DrawerLink from "./component/DrawerLink";
-import LogRocket from './main/table/LogRocket';
-import Nutrition from './main/table/Nutrition';
-import QuickStart from './main/table/QuickStart';
-import Example1 from './main/table/Example1';
+import Table from './main/table';
 import { setIconXL } from "./service/util";
 
 // region ------------------------------------------------------------- Drawer layout
@@ -131,40 +125,8 @@ const App: React.FC<{}> = () => {
   };
   // endregion
 
-  const [FaStar, ImHome3, GrTextAlignLeft, FaTable, IoMdRocket, IoMdNutrition, MdLooksOne] =
-    [_FaStar, _ImHome3, _GrTextAlignLeft, _FaTable, _IoMdRocket, _IoMdNutrition, _MdLooksOne].map(icon => setIconXL(icon));
-
-  // region ------------------------------------------------------------- LogRocket data
-  const data = [
-    { firstName: "jane", lastName: "doe", age: 20 },
-    { firstName: "john", lastName: "smith", age: 21 }
-  ];
-
-  const columns = [
-    {
-      Header: "Name",
-      columns: [
-        {
-          Header: "First Name",
-          accessor: "firstName"
-        },
-        {
-          Header: "Last Name",
-          accessor: "lastName"
-        }
-      ]
-    },
-    {
-      Header: "Other Info",
-      columns: [
-        {
-          Header: "Age",
-          accessor: "age"
-        }
-      ]
-    }
-  ];
-  // endregion
+  const [FaStar, ImHome3, GrTextAlignLeft, FaTable] =
+    [_FaStar, _ImHome3, _GrTextAlignLeft, _FaTable].map(icon => setIconXL(icon));
 
   sections = [
     {
@@ -186,28 +148,10 @@ const App: React.FC<{}> = () => {
       main: <Demo />
     },
     {
-      to: '/table/log-rocket',
-      text: 'LogRocket',
-      icon: <IoMdRocket />,
-      main: <LogRocket columns={columns} data={data} />
-    },
-    {
-      to: '/table/nutrition',
-      text: 'Nutrition',
-      icon: <IoMdNutrition />,
-      main: <Nutrition />
-    },
-    {
-      to: '/table/quick',
-      text: 'Quick Start',
+      to: '/table',
+      text: 'Table',
       icon: <FaTable />,
-      main: <QuickStart />
-    },
-    {
-      to: '/table/example1',
-      text: 'Example 1',
-      icon: <MdLooksOne />,
-      main: <Example1 />
+      main: <Table />
     },
   ];
   defaultSection = sections[0];
@@ -268,7 +212,7 @@ const App: React.FC<{}> = () => {
           <Switch>
 
             {sections.map((section, _index) => (
-              <Route path={section.to} key={section.text}>
+              <Route path={section.to} key={section.text} exact>  {/* Using exact avoids path paragraphs/x show Paragraph main and highlight Home menu link */}
                 {section.main}
               </Route>))}
 

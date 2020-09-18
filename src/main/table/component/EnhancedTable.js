@@ -20,6 +20,7 @@ import {
   useSortBy,
   useTable,
 } from 'react-table'
+import styled from "styled-components";
 
 const IndeterminateCheckbox = React.forwardRef(
   ({ indeterminate, total, selected, ...rest }, ref) => {
@@ -43,6 +44,12 @@ const inputStyle = {
   background: 'transparent',
   outlineColor: 'hsl(0 0% 83% / 1)', /* for focus state */
 };
+
+const MaUTableStyled = styled(MaUTable)`
+    table-layout: fixed;
+    min-width: 856px;
+    width: calc(100% - 70px);   /* First with drawer menu collapsed, adjust screen width at the minimum viewable width (f.e. it will depend on how many columns you have) and fill the adequate pixels to substract so there is no horizontal scroll. Then see how width you table is and with that value fill min-width */    
+`;
 
 // Create an editable cell renderer
 const EditableCell = ({
@@ -188,7 +195,7 @@ const EnhancedTable = ({
         setGlobalFilter={setGlobalFilter}
         globalFilter={globalFilter}
       />
-      <MaUTable {...getTableProps()}>
+      <MaUTableStyled {...getTableProps()}>
         <TableHead>
           {headerGroups.map(headerGroup => (
             <TableRow {...headerGroup.getHeaderGroupProps()}>
@@ -237,7 +244,7 @@ const EnhancedTable = ({
                 25,
                 { label: 'All', value: data.length },
               ]}
-              colSpan={4}
+              colSpan={5}
               count={data.length}
               rowsPerPage={pageSize}
               page={pageIndex}
@@ -247,7 +254,7 @@ const EnhancedTable = ({
             />
           </TableRow>
         </TableFooter>
-      </MaUTable>
+      </MaUTableStyled>
     </TableContainer>
   )
 };
