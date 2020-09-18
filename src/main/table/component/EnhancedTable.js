@@ -115,6 +115,7 @@ const EnhancedTable = ({
     {
       columns,
       data,
+      initialState: { pageSize: 5 },
       defaultColumn,
       autoResetPage: !skipPageReset,
       // updateMyData isn't part of the API, but
@@ -236,14 +237,10 @@ const EnhancedTable = ({
                 25,
                 { label: 'All', value: data.length },
               ]}
-              colSpan={3}
+              colSpan={4}
               count={data.length}
               rowsPerPage={pageSize}
               page={pageIndex}
-              SelectProps={{
-                inputProps: { 'aria-label': 'rows per page' },
-                native: true,
-              }}
               onChangePage={handleChangePage}
               onChangeRowsPerPage={handleChangeRowsPerPage}
               ActionsComponent={TablePaginationActions}

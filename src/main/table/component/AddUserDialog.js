@@ -20,7 +20,6 @@ const initialUser = {
   visits: 0,
   status: 'single',
   progress: 0,
-  subRows: undefined,
 };
 
 const AddUserDialog = props => {
