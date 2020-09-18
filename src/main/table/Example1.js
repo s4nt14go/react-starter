@@ -1,6 +1,6 @@
 import React from 'react'
 import styled from 'styled-components'
-import { useTable, usePagination, useRowSelect } from 'react-table'
+import { useTable, usePagination } from 'react-table'
 
 import makeData from './makeData'
 
@@ -29,6 +29,14 @@ const Styles = styled.div`
       :last-child {
         border-right: 0;
       }
+
+      input {
+        font-size: 1rem;
+        padding: 0;
+        margin: 0;
+        border: 0;
+        outline-color: hsl(0 0% 83% / 1); /* for focus state */
+      }
     }
   }
 
@@ -37,34 +45,49 @@ const Styles = styled.div`
   }
 `
 
-const IndeterminateCheckbox = React.forwardRef(
-  ({ indeterminate, ...rest }, ref) => {
-    const defaultRef = React.useRef()
-    const resolvedRef = ref || defaultRef
+// Create an editable cell renderer
+const EditableCell = ({
+                        value: initialValue,
+                        row: { index },
+                        column: { id },
+                        updateMyData, // This is a custom function that we supplied to our table instance
+                      }) => {
+  // We need to keep and update the state of the cell normally
+  const [value, setValue] = React.useState(initialValue)
 
-    React.useEffect(() => {
-      resolvedRef.current.indeterminate = indeterminate
-    }, [resolvedRef, indeterminate])
-
-    return (
-      <>
-        <input type="checkbox" ref={resolvedRef} {...rest} />
-      </>
-    )
+  const onChange = e => {
+    setValue(e.target.value)
   }
-)
 
-function Table({ columns, data }) {
-  // Use the state and functions returned from useTable to build your UI
+  // We'll only update the external data when the input is blurred
+  const onBlur = () => {
+    updateMyData(index, id, value)
+  }
+
+  // If the initialValue is changed external, sync it up with our state
+  React.useEffect(() => {
+    setValue(initialValue)
+  }, [initialValue])
+
+  return <input value={value} onChange={onChange} onBlur={onBlur} />
+}
+
+// Set our editable cell renderer as the default Cell renderer
+const defaultColumn = {
+  Cell: EditableCell,
+}
+
+// Be sure to pass our updateMyData and the skipPageReset option
+function Table({ columns, data, updateMyData, skipPageReset }) {
+  // For this example, we're using pagination to illustrate how to stop
+  // the current page from resetting when our data changes
+  // Otherwise, nothing is different here.
   const {
     getTableProps,
     getTableBodyProps,
     headerGroups,
     prepareRow,
-    page, // Instead of using 'rows', we'll use page,
-    // which has only the rows for the active page
-
-    // The rest of these things are super handy, too ;)
+    page,
     canPreviousPage,
     canNextPage,
     pageOptions,
@@ -73,58 +96,27 @@ function Table({ columns, data }) {
     nextPage,
     previousPage,
     setPageSize,
-    selectedFlatRows,
-    state: { pageIndex, pageSize, selectedRowIds },
+    state: { pageIndex, pageSize },
   } = useTable(
     {
       columns,
       data,
+      defaultColumn,
+      // use the skipPageReset option to disable page resetting temporarily
+      autoResetPage: !skipPageReset,
+      // updateMyData isn't part of the API, but
+      // anything we put into these options will
+      // automatically be available on the instance.
+      // That way we can call this function from our
+      // cell renderer!
+      updateMyData,
     },
-    usePagination,
-    useRowSelect,
-    hooks => {
-      hooks.visibleColumns.push(columns => [
-        // Let's make a column for selection
-        {
-          id: 'selection',
-          // The header can use the table's getToggleAllRowsSelectedProps method
-          // to render a checkbox
-          Header: ({ getToggleAllPageRowsSelectedProps }) => (
-            <div>
-              <IndeterminateCheckbox {...getToggleAllPageRowsSelectedProps()} />
-            </div>
-          ),
-          // The cell can use the individual row's getToggleRowSelectedProps method
-          // to the render a checkbox
-          Cell: ({ row }) => (
-            <div>
-              <IndeterminateCheckbox {...row.getToggleRowSelectedProps()} />
-            </div>
-          ),
-        },
-        ...columns,
-      ])
-    }
+    usePagination
   )
 
   // Render the UI for your table
   return (
     <>
-      <pre>
-        <code>
-          {JSON.stringify(
-            {
-              pageIndex,
-              pageSize,
-              pageCount,
-              canNextPage,
-              canPreviousPage,
-            },
-            null,
-            2
-          )}
-        </code>
-      </pre>
       <table {...getTableProps()}>
         <thead>
         {headerGroups.map(headerGroup => (
@@ -148,10 +140,6 @@ function Table({ columns, data }) {
         })}
         </tbody>
       </table>
-      {/*
-        Pagination can be built however you'd like.
-        This is just a very basic UI implementation:
-      */}
       <div className="pagination">
         <button onClick={() => gotoPage(0)} disabled={!canPreviousPage}>
           {'<<'}
@@ -195,20 +183,6 @@ function Table({ columns, data }) {
             </option>
           ))}
         </select>
-        <pre>
-          <code>
-            {JSON.stringify(
-              {
-                selectedRowIds: selectedRowIds,
-                'selectedFlatRows[].original': selectedFlatRows.map(
-                  d => d.original
-                ),
-              },
-              null,
-              2
-            )}
-          </code>
-        </pre>
       </div>
     </>
   )
@@ -255,11 +229,52 @@ function App() {
     []
   )
 
-  const data = React.useMemo(() => makeData(10000), [])
+  const [data, setData] = React.useState(() => makeData(20))
+  const [originalData] = React.useState(data)
+  const [skipPageReset, setSkipPageReset] = React.useState(false)
+
+  // We need to keep the table from resetting the pageIndex when we
+  // Update data. So we can keep track of that flag with a ref.
+
+  // When our cell renderer calls updateMyData, we'll use
+  // the rowIndex, columnId and new value to update the
+  // original data
+  const updateMyData = (rowIndex, columnId, value) => {
+    // We also turn on the flag to not reset the page
+    setSkipPageReset(true)
+    setData(old =>
+      old.map((row, index) => {
+        if (index === rowIndex) {
+          return {
+            ...old[rowIndex],
+            [columnId]: value,
+          }
+        }
+        return row
+      })
+    )
+  }
+
+  // After data chagnes, we turn the flag back off
+  // so that if data actually changes when we're not
+  // editing it, the page is reset
+  React.useEffect(() => {
+    setSkipPageReset(false)
+  }, [data])
+
+  // Let's add a data resetter/randomizer to help
+  // illustrate that flow...
+  const resetData = () => setData(originalData)
 
   return (
     <Styles>
-      <Table columns={columns} data={data} />
+      <button onClick={resetData}>Reset Data</button>
+      <Table
+        columns={columns}
+        data={data}
+        updateMyData={updateMyData}
+        skipPageReset={skipPageReset}
+      />
     </Styles>
   )
 }
