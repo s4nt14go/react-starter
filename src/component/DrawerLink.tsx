@@ -8,6 +8,10 @@ import {sections, defaultSection} from "../App";
 const Link = styled(_Link)`
   color: inherit;
   text-decoration: none;
+  
+  svg {
+    font-size: x-large;
+  }
 `;
 
 type Props = {

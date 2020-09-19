@@ -22,16 +22,17 @@ import {
   MdChevronLeft,
   MdChevronRight,
   MdMenu,
-  FaStar as _FaStar,
-  ImHome3 as _ImHome3,
-  GrTextAlignLeft as _GrTextAlignLeft,
-  FaTable as _FaTable,
+  FaReact,
+  ImHome3,
+  GrTextAlignLeft,
+  FaTable,
+  AiOutlineForm,
 } from "react-icons/all";
 import styled, {css} from 'styled-components'
 import Paragraphs from "./main/Paragraphs";
 import DrawerLink from "./component/DrawerLink";
 import Table from './main/table';
-import { setIconXL } from "./service/util";
+import Formik from './main/formik';
 
 // region ------------------------------------------------------------- Drawer layout
 const drawerWidth = 240;
@@ -125,9 +126,6 @@ const App: React.FC<{}> = () => {
   };
   // endregion
 
-  const [FaStar, ImHome3, GrTextAlignLeft, FaTable] =
-    [_FaStar, _ImHome3, _GrTextAlignLeft, _FaTable].map(icon => setIconXL(icon));
-
   sections = [
     {
       to: '/home',
@@ -144,7 +142,7 @@ const App: React.FC<{}> = () => {
     {
       to: '/starred',
       text: 'Starred',
-      icon: <FaStar />,
+      icon: <FaReact />,
       main: <Demo />
     },
     {
@@ -152,6 +150,12 @@ const App: React.FC<{}> = () => {
       text: 'Table',
       icon: <FaTable />,
       main: <Table />
+    },
+    {
+      to: '/formik',
+      text: 'Formik',
+      icon: <AiOutlineForm />,
+      main: <Formik />
     },
   ];
   defaultSection = sections[0];

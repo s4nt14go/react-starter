@@ -4,9 +4,7 @@ import InputBase from '@material-ui/core/InputBase'
 import { fade, makeStyles } from '@material-ui/core/styles'
 import PropTypes from 'prop-types'
 import { MdSearch } from 'react-icons/all'
-import { setIconXL } from "../../../service/util";
 
-const SearchIcon = setIconXL(MdSearch);
 const useStyles = makeStyles(theme => ({
   search: {
     position: 'relative',
@@ -30,6 +28,7 @@ const useStyles = makeStyles(theme => ({
     display: 'flex',
     alignItems: 'center',
     justifyContent: 'center',
+    fontSize: 'x-large',
   },
   inputInput: {
     padding: theme.spacing(1, 1, 1, 7),
@@ -56,7 +55,7 @@ const GlobalFilter = ({
   return (
     <div className={classes.search}>
       <div className={classes.searchIcon}>
-        <SearchIcon />
+        <MdSearch />
       </div>
       <InputBase
         value={globalFilter || ''}
