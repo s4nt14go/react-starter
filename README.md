@@ -13,15 +13,15 @@ You can checkout different tags, each of them contains more utilities to fit the
 ### Material mini drawer layout - tag 1.0<br />
 ![tag 1.0](./demo/tag1.gif)<br /><br />
 Utilities included:
-* [Material UI](https://material-ui.com)
-* [React router](https://reactrouter.com/web)
-* [Styled components](https://styled-components.com)
-* [React icons](https://react-icons.netlify.com)
+* [Material UI](https://material-ui.com) @material-ui/core
+* [React router](https://reactrouter.com/web) react-router-dom
+* [Styled components](https://styled-components.com) styled-components
+* [React icons](https://react-icons.netlify.com) react-icons
 
 ### Table - tag 2.0<br />
 ![tag 2.0](./demo/tag2.gif)<br /><br />
 Utilities included:
-* [react-table](https://react-table-omega.vercel.app)
+* [React Table](https://react-table-omega.vercel.app) react-table
 
 ### Instructions
 
