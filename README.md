@@ -10,16 +10,16 @@
 
 Get a project with a Material UI navigation drawer layout including some helpful libraries commonly added when we start a new project or just need a playground friendlier than a simple "hello world".<br /><br />
 You can checkout different tags, each of them contains more utilities to fit the complexity of your needs.
-#### Material mini drawer layout - tag 1.0<br /><br />
-![tag 1.0](./demo/tag1.gif)<br /><br /><br />
+### Material mini drawer layout - tag 1.0<br />
+![tag 1.0](./demo/tag1.gif)<br /><br />
 Utilities included:
 * [Material UI](https://material-ui.com)
 * [React router](https://reactrouter.com/web)
 * [Styled components](https://styled-components.com)
 * [React icons](https://react-icons.netlify.com)
 
-#### Table - tag 2.0<br /><br />
-![tag 2.0](./demo/tag2.gif)<br /><br /><br />
+### Table - tag 2.0<br />
+![tag 2.0](./demo/tag2.gif)<br /><br />
 Utilities included:
 * [react-table](https://react-table-omega.vercel.app)
 
