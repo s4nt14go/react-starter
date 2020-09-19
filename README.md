@@ -8,8 +8,9 @@
 
 ### Description
 
-Get a project with a Material UI navigation drawer layout including some helpful libraries commonly added when we start a new project or just need a playground friendlier than a simple "hello world".<br /><br />
-You can checkout different tags, each of them contains more utilities to fit the complexity of your needs.
+When starting a new project, we generally use the same libraries and it's helpful to have some examples of that bunch of libraries in a working project.<br /><br />
+In the different sections of this React app you will find examples of use for these libraries, so you can look into before you integrate these libraries in your project.<br /><br />
+You can checkout different tags, each of them contains more utilities to fit the complexity of your needs. The tags are useful in the case you are only interested in the first basics examples. 
 ### Material mini drawer layout - tag 1.0<br />
 ![tag 1.0](./demo/tag1.gif)<br /><br />
 Utilities included:
@@ -27,8 +28,9 @@ Utilities included:
 
 1. Clone the repo and `cd` into<br /><br />
 `git clone https://github.com/s4nt14go/react-starter`<br /><br />
-1. Checkout the tag you're interested in and start your own branch<br /><br />
-`git checkouwdcwt tags/2.0 -b my-branch`<br /><br />
+1. (Optional) In the case you are want to checkout one of the intermediary tags you can do it with the following command, which also starts your own branch<br /><br />
+`git checkout tags/2.0 -b my-branch`<br /><br />
+You have to replace the tag number for the one you want.<br /><br />
 1. Install dependencies<br /><br />
 `npm i`<br /><br />
 1. Run the project<br /><br />
