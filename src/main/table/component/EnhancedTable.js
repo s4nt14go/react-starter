@@ -48,7 +48,20 @@ const inputStyle = {
 const MaUTableStyled = styled(MaUTable)`
     table-layout: fixed;
     min-width: 856px;
-    width: calc(100% - 70px);   /* First with drawer menu collapsed, adjust screen width at the minimum viewable width (f.e. it will depend on how many columns you have) and fill the adequate pixels to substract so there is no horizontal scroll. Then see how width you table is and with that value fill min-width */    
+    width: calc(100% - 70px);   /* First with drawer menu collapsed, adjust screen width at the minimum viewable width (f.e. it will depend on how many columns you have) and fill the adequate pixels to substract so there is no horizontal scroll. Then see how width you table is and with that value fill min-width */
+    tr > th, tr > td {
+      padding: 0 10px;    
+    }
+    tr > td > input {
+      max-width: -webkit-fill-available;
+    }    
+`;
+
+const TableHeadStyled = styled(TableHead)`
+    white-space: nowrap; 
+    tr > th:nth-child(7) {
+      width: 131px;    
+    }
 `;
 
 // Create an editable cell renderer
@@ -122,7 +135,7 @@ const EnhancedTable = ({
     {
       columns,
       data,
-      initialState: { pageSize: 5 },
+      initialState: { pageSize: 10 },
       defaultColumn,
       autoResetPage: !skipPageReset,
       // updateMyData isn't part of the API, but
@@ -196,7 +209,7 @@ const EnhancedTable = ({
         globalFilter={globalFilter}
       />
       <MaUTableStyled {...getTableProps()}>
-        <TableHead>
+        <TableHeadStyled>
           {headerGroups.map(headerGroup => (
             <TableRow {...headerGroup.getHeaderGroupProps()}>
               {headerGroup.headers.map(column => (
@@ -217,7 +230,7 @@ const EnhancedTable = ({
               ))}
             </TableRow>
           ))}
-        </TableHead>
+        </TableHeadStyled>
         <TableBody>
           {page.map((row, _i) => {
             prepareRow(row);
