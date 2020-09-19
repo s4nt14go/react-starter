@@ -11,7 +11,7 @@ import { createMuiTheme, ThemeProvider } from '@material-ui/core/styles';
 const theme = createMuiTheme({
   typography: {
     fontFamily: [
-      'Montserrat',
+      'Inter',
       'Roboto', 'Helvetica', 'Arial', 'sans-serif'  // Default Roboto typography
     ].join(','),
   },
