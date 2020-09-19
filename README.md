@@ -9,7 +9,7 @@
 ### Description
 
 Get a project with a Material UI navigation drawer layout including some helpful libraries commonly added when we start a new project or just need a playground friendlier than a simple "hello world".<br /><br />
-My intent is that you can checkout different tags, each of them contains more utilities to fit the complexity of your needs according what you're up to.
+You can checkout different tags, each of them contains more utilities to fit the complexity of your needs.
 #### Material mini drawer layout - tag 1.0<br /><br />
 ![tag 1.0](./demo/tag1.gif)<br /><br /><br />
 Utilities included:
