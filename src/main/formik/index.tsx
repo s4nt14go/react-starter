@@ -5,19 +5,20 @@ import { Formik, Form } from 'formik';
 import * as Yup from 'yup';
 import { MyTextInput, MyCheckbox, MySelect } from './components';
 
+type Props = {
+  firstName: string
+  lastName: string
+  email: string
+  acceptedTerms: boolean
+  jobType: string
+}
 
-const SignupForm = () => {
+const SignupForm: React.FC<Props> = (initialValues) => {
   return (
     <>
       <h1>Subscribe!</h1>
       <Formik
-        initialValues={{
-          firstName: '',
-          lastName: '',
-          email: '',
-          acceptedTerms: false, // added for our checkbox
-          jobType: '', // added for our select
-        }}
+        initialValues={initialValues}
         validationSchema={Yup.object({
           firstName: Yup.string()
             .max(15, 'Must be 15 characters or less')

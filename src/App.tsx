@@ -126,6 +126,15 @@ const App: React.FC<{}> = () => {
   };
   // endregion
 
+
+  const formikInitial = {
+    firstName: '',
+    lastName: '',
+    email: '',
+    acceptedTerms: false, // added for our checkbox
+    jobType: '', // added for our select
+  };
+
   sections = [
     {
       to: '/home',
@@ -155,7 +164,7 @@ const App: React.FC<{}> = () => {
       to: '/formik',
       text: 'Formik',
       icon: <AiOutlineForm />,
-      main: <Formik />
+      main: <Formik {...formikInitial} />
     },
   ];
   defaultSection = sections[0];
