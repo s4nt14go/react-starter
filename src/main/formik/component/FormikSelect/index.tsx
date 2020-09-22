@@ -37,7 +37,7 @@ const MaterialUISelectField: React.FC<MaterialUISelectFieldProps> = ({
                                                                        required
                                                                      }) => {
   return (
-    <FormControl fullWidth variant="outlined" required>
+    <FormControl fullWidth variant="outlined" required style={{margin: '0 0 12px'}}>
       <InputLabel required={required}>{label}</InputLabel>
       <Select name={name} onChange={onChange} onBlur={onBlur} value={value} label={label}>
         {children}
