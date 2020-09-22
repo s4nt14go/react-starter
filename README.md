@@ -24,6 +24,11 @@ Utilities included:
 Utilities included:
 * [React Table](https://react-table-omega.vercel.app) react-table
 
+### Form validation - tag 3.0<br />
+![tag 3.0](./demo/tag3.gif)<br /><br />
+Utilities included:
+* [Formik](https://https://formik.org) formik
+
 ### Instructions
 
 1. Clone the repo and `cd` into<br /><br />

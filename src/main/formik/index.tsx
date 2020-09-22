@@ -71,41 +71,49 @@ const SignupForm: React.FC<Props> = (initialValues) => {
           }, 400);
         }}
       >
-        <Form style={{width: 347}}>
-          <MyTextInput
-            label="First Name"
-            name="firstName"
-            type="text"
-            placeholder="Jane"
-          />
-          <MyTextInput
-            label="Last Name"
-            name="lastName"
-            type="text"
-            placeholder="Doe"
-          />
-          <MyTextInput
-            label="Email Address"
-            name="email"
-            type="email"
-            placeholder="jane@formik.com"
-          />
 
-          <FormikSelect
-            name="jobType"
-            items={jobTypesItems}
-            label={`Job Type *`}
-          />
+        {({
+            values,
+            isValid,
+            /* and other goodies; i.e. errors, touched, handleChange, handleBlur, handleSubmit, isSubmitting, */
+          }) => {
 
-          <MyCheckbox name="acceptedTerms">
-            I accept the terms and conditions
-          </MyCheckbox>
+          return <Form style={{width: 347}}>
+            <MyTextInput
+              label="First Name"
+              name="firstName"
+              type="text"
+              placeholder="Jane"
+            />
+            <MyTextInput
+              label="Last Name"
+              name="lastName"
+              type="text"
+              placeholder="Doe"
+            />
+            <MyTextInput
+              label="Email Address"
+              name="email"
+              type="email"
+              placeholder="jane@formik.com"
+            />
 
-          <Button type="submit" variant="contained" color="primary">
-            Submit
-          </Button>
-          {/*<Debug />*/}
-        </Form>
+            <FormikSelect
+              name="jobType"
+              items={jobTypesItems}
+              label={`Job Type *`}
+            />
+
+            <MyCheckbox name="acceptedTerms">
+              I accept the terms and conditions
+            </MyCheckbox>
+
+            <Button type="submit" variant="contained" color="primary" disabled={!isValid || !values.acceptedTerms}>
+              Submit
+            </Button>
+            {/*<Debug />*/}
+          </Form>
+        }}
       </Formik>
     </>
 
