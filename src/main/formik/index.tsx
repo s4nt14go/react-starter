@@ -1,9 +1,10 @@
 import React from "react";
-import "./index.css";
 import Debug from './Debug';
 import { Formik, Form } from 'formik';
 import * as Yup from 'yup';
-import { MyTextInput, MyCheckbox, MySelect } from './components';
+import MyTextInput from './component/MyTextInput';
+import MyCheckbox from './component/MyCheckbox';
+import FormikSelect from "./component/FormikSelect";
 
 type Props = {
   firstName: string
@@ -13,10 +14,33 @@ type Props = {
   jobType: string
 }
 
+const jobTypesItems = [
+  {
+    label: "Select a job type",
+    value: ""
+  },
+  {
+    label: "Designer",
+    value: "designer"
+  },
+  {
+    label: "Developer",
+    value: "development"
+  },
+  {
+    label: "Product Manager",
+    value: "product"
+  },
+  {
+    label: "Other",
+    value: "other"
+  },
+];
+
 const SignupForm: React.FC<Props> = (initialValues) => {
   return (
     <>
-      <h1>Subscribe!</h1>
+      <h2>Subscribe!</h2>
       <Formik
         initialValues={initialValues}
         validationSchema={Yup.object({
@@ -46,7 +70,7 @@ const SignupForm: React.FC<Props> = (initialValues) => {
           }, 400);
         }}
       >
-        <Form>
+        <Form style={{width: 347}}>
           <MyTextInput
             label="First Name"
             name="firstName"
@@ -65,13 +89,13 @@ const SignupForm: React.FC<Props> = (initialValues) => {
             type="email"
             placeholder="jane@formik.com"
           />
-          <MySelect label="Job Type" name="jobType">
-            <option value="">Select a job type</option>
-            <option value="designer">Designer</option>
-            <option value="development">Developer</option>
-            <option value="product">Product Manager</option>
-            <option value="other">Other</option>
-          </MySelect>
+
+          <FormikSelect
+            name="jobType"
+            items={jobTypesItems}
+            label={`Job Type *`}
+          />
+
           <MyCheckbox name="acceptedTerms">
             I accept the terms and conditions
           </MyCheckbox>

@@ -1,0 +1,6 @@
+.red fieldset {
+  border-color: #f44336 !important;
+}
+.red svg, .red label, .red p {
+  color: #f44336 !important;
+}
