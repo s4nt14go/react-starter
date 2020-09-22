@@ -4,7 +4,7 @@ import { FormikConsumer } from 'formik';
 const Debug = () => (
   <div
     style={{
-      margin: '0',
+      margin: '12px 0 0 0',
       borderRadius: 4,
       background: '#f6f8fa',
 

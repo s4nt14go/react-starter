@@ -1,10 +1,11 @@
 import React from "react";
-import Debug from './Debug';
+// import Debug from './Debug';
 import { Formik, Form } from 'formik';
 import * as Yup from 'yup';
 import MyTextInput from './component/MyTextInput';
 import MyCheckbox from './component/MyCheckbox';
 import FormikSelect from "./component/FormikSelect";
+import {Button} from "@material-ui/core";
 
 type Props = {
   firstName: string
@@ -100,8 +101,10 @@ const SignupForm: React.FC<Props> = (initialValues) => {
             I accept the terms and conditions
           </MyCheckbox>
 
-          <button type="submit">Submit</button>
-          <Debug />
+          <Button type="submit" variant="contained" color="primary">
+            Submit
+          </Button>
+          {/*<Debug />*/}
         </Form>
       </Formik>
     </>
