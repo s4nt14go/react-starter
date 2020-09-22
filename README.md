@@ -27,7 +27,7 @@ Utilities included:
 ### Form validation - tag 3.0<br />
 ![tag 3.0](./demo/tag3.gif)<br /><br />
 Utilities included:
-* [Formik](https://https://formik.org) formik
+* [Formik](https://formik.org) formik
 
 ### Instructions
 
