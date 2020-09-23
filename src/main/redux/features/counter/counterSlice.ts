@@ -1,5 +1,6 @@
 import { createSlice, PayloadAction } from '@reduxjs/toolkit';
 import { AppThunk, RootState } from '../../app/store';
+import { createSelector } from 'reselect'
 
 interface CounterState {
   value: number;
@@ -49,11 +50,19 @@ export const incrementAsync = (amount: number): AppThunk => dispatch => {
   }, 1000);
 };
 
+// region --------------------------------------------------------------------------------- Selectors
 // The function below is called a selector and allows us to select a value from
 // the state. Selectors can also be defined inline where they're used instead of
 // in the slice file. For example: `useSelector((state: RootState) => state.counter.value)`
 export const selectCounterValue = (state: RootState) => state.counter.value;
 
 export const selectCounterState = (state: RootState) => state.counter;
+
+// With reselect you can compute derived data, allowing Redux to store the minimal possible state.
+export const reselectDouble = createSelector(
+  selectCounterValue,
+  value => 2*value
+);
+// endregion
 
 export default counterSlice.reducer;

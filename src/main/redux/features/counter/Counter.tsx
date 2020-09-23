@@ -7,12 +7,14 @@ import {
   incrementAsync,
   selectCounterValue,
   selectCounterState,
+  reselectDouble,
 } from './counterSlice';
 import styles from './Counter.module.css';
 
 export function Counter() {
   const count = useSelector(selectCounterValue);
   const state = useSelector(selectCounterState);
+  const double = useSelector(reselectDouble);
   const dispatch = useDispatch();
   const [incrementAmount, setIncrementAmount] = useState('2');
 
@@ -57,6 +59,7 @@ export function Counter() {
           Add Async
         </button>
       </div>
+      <span style={{display: 'block'}}>Double derived with reselect: {double}</span>
       {state.addingAsync? <span>ADDING ASYNC</span> : <span>&nbsp;</span>}
     </div>
   );

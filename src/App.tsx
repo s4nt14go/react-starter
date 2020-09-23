@@ -110,7 +110,8 @@ const App: React.FC<{}> = () => {
   const Main = styled.main`
     flex-grow: 1;
     
-    ${pathname !== '/starred' && css`
+    ${( pathname !== '/starred' && pathname !== '/starred/' &&
+        pathname !== '/redux' && pathname !== '/redux/') && css`
       padding: 24px;
     `}
   `;
