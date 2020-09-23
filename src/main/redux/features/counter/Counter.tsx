@@ -5,12 +5,14 @@ import {
   increment,
   incrementByAmount,
   incrementAsync,
-  selectCount,
+  selectCounterValue,
+  selectCounterState,
 } from './counterSlice';
 import styles from './Counter.module.css';
 
 export function Counter() {
-  const count = useSelector(selectCount);
+  const count = useSelector(selectCounterValue);
+  const state = useSelector(selectCounterState);
   const dispatch = useDispatch();
   const [incrementAmount, setIncrementAmount] = useState('2');
 
@@ -55,6 +57,7 @@ export function Counter() {
           Add Async
         </button>
       </div>
+      {state.addingAsync? <span>ADDING ASYNC</span> : <span>&nbsp;</span>}
     </div>
   );
 }

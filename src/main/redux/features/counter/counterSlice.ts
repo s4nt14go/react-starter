@@ -3,10 +3,12 @@ import { AppThunk, RootState } from '../../app/store';
 
 interface CounterState {
   value: number;
+  addingAsync: boolean;
 }
 
 const initialState: CounterState = {
   value: 0,
+  addingAsync: false,
 };
 
 export const counterSlice = createSlice({
@@ -26,17 +28,22 @@ export const counterSlice = createSlice({
     // Use the PayloadAction type to declare the contents of `action.payload`
     incrementByAmount: (state, action: PayloadAction<number>) => {
       state.value += action.payload;
+      state.addingAsync = false;
+    },
+    setAddingAsync: (state, action: PayloadAction<boolean>) => {
+      state.addingAsync = action.payload;
     },
   },
 });
 
-export const { increment, decrement, incrementByAmount } = counterSlice.actions;
+export const { increment, decrement, incrementByAmount, setAddingAsync } = counterSlice.actions;
 
 // The function below is called a thunk and allows us to perform async logic. It
 // can be dispatched like a regular action: `dispatch(incrementAsync(10))`. This
 // will call the thunk with the `dispatch` function as the first argument. Async
 // code can then be executed and other actions can be dispatched
 export const incrementAsync = (amount: number): AppThunk => dispatch => {
+  dispatch(setAddingAsync(true));
   setTimeout(() => {
     dispatch(incrementByAmount(amount));
   }, 1000);
@@ -45,6 +52,8 @@ export const incrementAsync = (amount: number): AppThunk => dispatch => {
 // The function below is called a selector and allows us to select a value from
 // the state. Selectors can also be defined inline where they're used instead of
 // in the slice file. For example: `useSelector((state: RootState) => state.counter.value)`
-export const selectCount = (state: RootState) => state.counter.value;
+export const selectCounterValue = (state: RootState) => state.counter.value;
+
+export const selectCounterState = (state: RootState) => state.counter;
 
 export default counterSlice.reducer;
