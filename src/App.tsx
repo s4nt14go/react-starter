@@ -34,6 +34,7 @@ import DrawerLink from "./component/DrawerLink";
 import Table from './main/table';
 import Formik from './main/formik';
 import Redux from './main/redux/App';
+import reduxLogo from './main/redux/logo.svg'
 
 // region ------------------------------------------------------------- Drawer layout
 const drawerWidth = 240;
@@ -170,7 +171,7 @@ const App: React.FC<{}> = () => {
     {
       to: '/redux',
       text: 'Redux',
-      icon: <FaReact />,
+      icon: <img src={reduxLogo} alt="Logo" style={{height: '2em', width: '2em'}} />,
       main: <Redux />
     },
   ];
