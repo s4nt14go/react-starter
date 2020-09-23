@@ -1,16 +1,19 @@
 import { createSlice, PayloadAction } from '@reduxjs/toolkit';
 import { AppThunk, RootState } from '../../app/store';
 import { createSelector } from 'reselect'
+import { loadState } from "../../app/localStorage";
 
 interface CounterState {
   value: number;
   addingAsync: boolean;
 }
 
-const initialState: CounterState = {
+export const defaultState = {
   value: 0,
   addingAsync: false,
 };
+
+const initialState: CounterState = loadState()?.counter || defaultState;
 
 export const counterSlice = createSlice({
   name: 'counter',
