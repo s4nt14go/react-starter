@@ -7,6 +7,8 @@ import {
   BrowserRouter as Router,
 } from "react-router-dom";
 import { createMuiTheme, ThemeProvider } from '@material-ui/core/styles';
+import { store } from './main/redux/app/store';
+import { Provider } from 'react-redux';
 
 const theme = createMuiTheme({
   typography: {
@@ -31,7 +33,9 @@ ReactDOM.render(
   /*<React.StrictMode> react-table useRowSelect does not work in strict mode https://github.com/tannerlinsley/react-table/issues/2659 */
     <ThemeProvider theme={theme}>
       <Router>
-        <App />
+        <Provider store={store}>
+          <App />
+        </Provider>
       </Router>
     </ThemeProvider>
   /*</React.StrictMode>*/,

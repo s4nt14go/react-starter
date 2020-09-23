@@ -33,6 +33,7 @@ import Paragraphs from "./main/Paragraphs";
 import DrawerLink from "./component/DrawerLink";
 import Table from './main/table';
 import Formik from './main/formik';
+import Redux from './main/redux/App';
 
 // region ------------------------------------------------------------- Drawer layout
 const drawerWidth = 240;
@@ -165,6 +166,12 @@ const App: React.FC<{}> = () => {
       text: 'Formik',
       icon: <AiOutlineForm />,
       main: <Formik {...formikInitial} />
+    },
+    {
+      to: '/redux',
+      text: 'Redux',
+      icon: <FaReact />,
+      main: <Redux />
     },
   ];
   defaultSection = sections[0];
