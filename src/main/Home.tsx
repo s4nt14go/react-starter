@@ -1,6 +1,12 @@
 import React from "react";
 
-const Home: React.FC<{}> = () => {
-  return <h2>Home</h2>;
+type Props = {
+  style: object
+}
+
+const Home: React.FC<Props> = ({ style }) => {
+  return <div style={style}>
+    <h2>Home</h2>
+  </div>;
 };
 export default Home;

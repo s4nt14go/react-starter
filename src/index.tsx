@@ -1,12 +1,12 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
 import './index.css';
-import App from './App';
 import * as serviceWorker from './serviceWorker';
 import {
   BrowserRouter as Router,
 } from "react-router-dom";
 import { createMuiTheme, ThemeProvider } from '@material-ui/core/styles';
+import Routes from "./Routes";
 
 const theme = createMuiTheme({
   typography: {
@@ -31,7 +31,7 @@ ReactDOM.render(
   <React.StrictMode>
     <ThemeProvider theme={theme}>
       <Router>
-        <App />
+        <Routes />
       </Router>
     </ThemeProvider>
   </React.StrictMode>,

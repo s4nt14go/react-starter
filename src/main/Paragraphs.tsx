@@ -1,8 +1,12 @@
 import React from "react";
 import {Typography} from "@material-ui/core";
 
-const Paragraphs: React.FC<{}> = () => {
-  return <>
+type Props = {
+  style: object
+}
+
+const Paragraphs: React.FC<Props> = ({style}) => {
+  return <div style={style}>
     <h2>Paragraphs</h2>
     <Typography paragraph>
       Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt
@@ -27,6 +31,6 @@ const Paragraphs: React.FC<{}> = () => {
       nibh sit. Ornare aenean euismod elementum nisi quis eleifend. Commodo viverra maecenas
       accumsan lacus vel facilisis. Nulla posuere sollicitudin aliquam ultrices sagittis orci a.
     </Typography>
-  </>;
+  </div>;
 };
 export default Paragraphs;
