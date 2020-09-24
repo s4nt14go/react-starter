@@ -11,7 +11,7 @@ import { createMuiTheme, ThemeProvider } from '@material-ui/core/styles';
 const theme = createMuiTheme({
   typography: {
     fontFamily: [
-      'Montserrat',
+      'Inter',
       'Roboto', 'Helvetica', 'Arial', 'sans-serif'  // Default Roboto typography
     ].join(','),
   },
@@ -25,7 +25,7 @@ const theme = createMuiTheme({
   },*/
 });
 
-console.log(theme);
+//console.log(theme);
 
 ReactDOM.render(
   <React.StrictMode>

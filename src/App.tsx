@@ -22,22 +22,15 @@ import {
   MdChevronLeft,
   MdChevronRight,
   MdMenu,
-  FaStar as _FaStar,
-  ImHome3 as _ImHome3,
-  GrTextAlignLeft as _GrTextAlignLeft,
+  FaReact,
+  ImHome3,
+  GrTextAlignLeft,
 } from "react-icons/all";
 import styled, {css} from 'styled-components'
-import {IconType} from "react-icons";
 import Paragraphs from "./main/Paragraphs";
 import DrawerLink from "./component/DrawerLink";
 
 // region ------------------------------------------------------------- Drawer layout
-function setSize(e:IconType):IconType {
-  return styled(e)`
-  font-size: x-large; 
-  `
-}
-
 const drawerWidth = 240;
 
 const useStyles = makeStyles((theme) => ({
@@ -107,11 +100,11 @@ const App: React.FC<{}> = () => {
 
   // region ------------------------------------------------------------- Drawer layout
   const { pathname } = useLocation();
-  console.log('pathname', pathname);
+  //console.log('pathname', pathname);
   const Main = styled.main`
     flex-grow: 1;
     
-    ${pathname !== '/starred' && css`
+    ${pathname !== '/starred' && pathname !== '/starred/' && css`
       padding: 24px;
     `}
   `;
@@ -129,8 +122,6 @@ const App: React.FC<{}> = () => {
   };
   // endregion
 
-  const [FaStar, ImHome3, GrTextAlignLeft] = [_FaStar, _ImHome3, _GrTextAlignLeft].map(icon => setSize(icon));
-
   sections = [
     {
       to: '/home',
@@ -147,7 +138,7 @@ const App: React.FC<{}> = () => {
     {
       to: '/starred',
       text: 'Starred',
-      icon: <FaStar />,
+      icon: <FaReact />,
       main: <Demo />
     },
   ];
@@ -209,7 +200,7 @@ const App: React.FC<{}> = () => {
           <Switch>
 
             {sections.map((section, _index) => (
-              <Route path={section.to} key={section.text}>
+              <Route path={section.to} key={section.text} exact>  {/* Using exact avoids path paragraphs/x show Paragraph main and highlight Home menu link */}
                 {section.main}
               </Route>))}
 
