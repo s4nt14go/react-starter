@@ -19,14 +19,7 @@ Utilities included:
 * [Styled components](https://styled-components.com) styled-components
 * [React icons](https://react-icons.netlify.com) react-icons
 
-### Instructions
-
-1. Clone the repo and `cd` into<br /><br />
-`git clone https://github.com/s4nt14go/react-starter`<br /><br />
-1. (Optional) In the case you are want to checkout one of the intermediary tags you can do it with the following command, which also starts your own branch<br /><br />
-`git checkout tags/2.0 -b my-branch`<br /><br />
-You have to replace the tag number for the one you want.<br /><br />
-1. Install dependencies<br /><br />
-`npm i`<br /><br />
-1. Run the project<br /><br />
-`npm start`
+### Landing page - tag 1.1<br />
+![tag 1.1](./demo/tag1.1.gif)<br /><br />
+Utilities included:
+* [Animate.css](https://https://animate.style) animate.css

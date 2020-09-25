@@ -17,6 +17,7 @@ const Div = styled.div`
   text-align: center;
   display: flex;
   align-items: center;
+  overflow: hidden;
 `;
 
 const lsKey = 'animateIndex';
