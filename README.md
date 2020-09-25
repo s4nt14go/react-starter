@@ -22,4 +22,4 @@ Utilities included:
 ### Landing page - tag 1.1<br />
 ![tag 1.1](./demo/tag1.1.gif)<br /><br />
 Utilities included:
-* [Animate.css](https://https://animate.style) animate.css
+* [Animate.css](https://animate.style) animate.css
