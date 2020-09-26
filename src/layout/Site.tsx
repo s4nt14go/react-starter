@@ -2,7 +2,7 @@ import React from 'react';
 import { makeStyles, useTheme } from '@material-ui/core/styles';
 import CssBaseline from '@material-ui/core/CssBaseline';
 import {Section} from "../Routes";
-import SiteDrawer from './SiteDrawer';
+import Drawer from './Drawer';
 
 const useStyles = makeStyles((theme) => ({
   root: {
@@ -28,7 +28,7 @@ const Site: React.FC<Props> = ({children, sections}) => {
 
   return (<div className={classes.root}><CssBaseline />
 
-    <SiteDrawer sections={sections} toolbarClass={classes.toolbar}/>
+    <Drawer sections={sections} toolbarClass={classes.toolbar} />
 
     <main style={{flexGrow: 1}}>
       <div className={classes.toolbar} />

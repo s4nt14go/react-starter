@@ -3,7 +3,7 @@ import { makeStyles, useTheme } from '@material-ui/core/styles';
 import {
   AppBar,
   Divider,
-  Drawer,
+  Drawer as DrawerMui,
   IconButton,
   List,
   Toolbar,
@@ -85,7 +85,7 @@ type Props = {
   toolbarClass: string
 };
 
-const SiteDrawer: React.FC<Props> = ({children, sections, toolbarClass}) => {
+const Drawer: React.FC<Props> = ({children, sections, toolbarClass}) => {
 
   const classes = useStyles();
   const theme = useTheme();
@@ -124,7 +124,7 @@ const SiteDrawer: React.FC<Props> = ({children, sections, toolbarClass}) => {
       </Toolbar>
     </AppBar>
 
-    <Drawer
+    <DrawerMui
       variant="permanent"
       className={clsx(classes.drawer, {
         [classes.drawerOpen]: open,
@@ -150,9 +150,9 @@ const SiteDrawer: React.FC<Props> = ({children, sections, toolbarClass}) => {
           </div>
         ))}
       </List>
-    </Drawer>
+    </DrawerMui>
 
   </>)
 };
 
-export default SiteDrawer;
+export default Drawer;
