@@ -4,12 +4,16 @@ import {
   AppBar,
   IconButton,
   Toolbar,
-  Typography
+  Typography,
+  Tooltip, Avatar
 } from '@material-ui/core';
 import clsx from 'clsx';
 import {
   MdMenu,
 } from "react-icons/all";
+import {useAuth0} from "@auth0/auth0-react";
+import LogoutButton from "../component/LogoutButton";
+import LoginButton from "../component/LoginButton";
 
 const drawerWidth = 190;
 
@@ -46,6 +50,9 @@ const Bar: React.FC<Props> = ({children, handleDrawerOpen, open}) => {
 
   const classes = useStyles();
 
+  const { user, isAuthenticated } = useAuth0();
+  console.log(user);
+
   return (
     <AppBar
       position="fixed"
@@ -65,9 +72,19 @@ const Bar: React.FC<Props> = ({children, handleDrawerOpen, open}) => {
         >
           <MdMenu />
         </IconButton>
-        <Typography variant="h6" noWrap>
+        <Typography variant="h6" noWrap style={{flexGrow: 1}}>
           Mini variant drawer
         </Typography>
+
+        {isAuthenticated?
+          <>
+            <Tooltip title={user.given_name || user.name}>
+              <Avatar alt={user.name} src={user.picture} />
+            </Tooltip>
+            <LogoutButton />
+          </>
+        : <LoginButton />}
+
       </Toolbar>
     </AppBar>
   )

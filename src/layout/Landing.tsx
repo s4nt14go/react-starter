@@ -23,13 +23,15 @@ const Div = styled.div`
 const lsKey = 'animateIndex';
 const effects = ['bounceInDown', 'flip', 'bounceInLeft',  'rotateIn', 'zoomInDown'];
 
+export const initialPath = 'home';  // This path is used when we click on "GO IN" and also when we logout/login, so it should be configured in Auth0 as Allowed Callback and Logout URLs
+
 const Landing: React.FC<{}> = () => {
 
   let history = useHistory();
 
 
   const handleGoIn = () => {
-    history.push(`/home`);
+    history.push(`/${initialPath}`);
   };
 
   const [ index, setIndex ] = useState();
@@ -47,7 +49,8 @@ const Landing: React.FC<{}> = () => {
           Let's get started
         </Typography>
         : <Typography variant="h4">&nbsp;</Typography>}
-      <Button variant="contained" color="secondary" onClick={handleGoIn}>Go in</Button>
+
+        <Button variant="contained" color="secondary" onClick={handleGoIn}>Go in</Button>
 
     </div>
   </Div>

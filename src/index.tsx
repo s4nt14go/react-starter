@@ -7,6 +7,7 @@ import {
 } from "react-router-dom";
 import { createMuiTheme, ThemeProvider } from '@material-ui/core/styles';
 import Routes from "./Routes";
+import Auth0ProviderWithHistory from "./auth0-provider-with-history";
 
 const theme = createMuiTheme({
   typography: {
@@ -31,7 +32,9 @@ ReactDOM.render(
   <React.StrictMode>
     <ThemeProvider theme={theme}>
       <Router>
-        <Routes />
+        <Auth0ProviderWithHistory>
+          <Routes />
+        </Auth0ProviderWithHistory>
       </Router>
     </ThemeProvider>
   </React.StrictMode>,
