@@ -1,48 +1,23 @@
 import React from 'react';
 import { makeStyles, useTheme } from '@material-ui/core/styles';
 import {
-  AppBar,
   Divider,
   Drawer as DrawerMui,
   IconButton,
   List,
-  Toolbar,
-  Typography
 } from '@material-ui/core';
 import clsx from 'clsx';
 import {
   MdChevronLeft,
   MdChevronRight,
-  MdMenu,
 } from "react-icons/all";
-import styled from 'styled-components'
 import DrawerLink from "../component/DrawerLink";
 import {Section} from "../Routes";
+import Bar from './Bar';
 
 const drawerWidth = 190;
 
 const useStyles = makeStyles((theme) => ({
-  appBar: {
-    zIndex: theme.zIndex.drawer + 1,
-    transition: theme.transitions.create(['width', 'margin'], {
-      easing: theme.transitions.easing.sharp,
-      duration: theme.transitions.duration.leavingScreen,
-    }),
-  },
-  appBarShift: {
-    marginLeft: drawerWidth,
-    width: `calc(100% - ${drawerWidth}px)`,
-    transition: theme.transitions.create(['width', 'margin'], {
-      easing: theme.transitions.easing.sharp,
-      duration: theme.transitions.duration.enteringScreen,
-    }),
-  },
-  menuButton: {
-    marginRight: 36,
-  },
-  hide: {
-    display: 'none',
-  },
   drawer: {
     width: drawerWidth,
     flexShrink: 0,
@@ -66,18 +41,6 @@ const useStyles = makeStyles((theme) => ({
       width: theme.spacing(9) + 1,
     },
   },
-  toolbar: {
-    display: 'flex',
-    alignItems: 'center',
-    justifyContent: 'flex-end',
-    padding: theme.spacing(0, 1),
-    // necessary for content to be below app bar
-    ...theme.mixins.toolbar,
-  },
-  content: {
-    flexGrow: 1,
-    padding: theme.spacing(3),
-  },
 }));
 
 type Props = {
@@ -100,29 +63,7 @@ const Drawer: React.FC<Props> = ({children, sections, toolbarClass}) => {
   };
 
   return (<>
-    <AppBar
-      position="fixed"
-      className={clsx(classes.appBar, {
-        [classes.appBarShift]: open,
-      })}
-    >
-      <Toolbar>
-        <IconButton
-          color="inherit"
-          aria-label="open drawer"
-          onClick={handleDrawerOpen}
-          edge="start"
-          className={clsx(classes.menuButton, {
-            [classes.hide]: open,
-          })}
-        >
-          <MdMenu />
-        </IconButton>
-        <Typography variant="h6" noWrap>
-          Mini variant drawer
-        </Typography>
-      </Toolbar>
-    </AppBar>
+    <Bar handleDrawerOpen={handleDrawerOpen} open={open} />
 
     <DrawerMui
       variant="permanent"
