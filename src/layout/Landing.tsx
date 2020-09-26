@@ -1,4 +1,4 @@
-import React from 'react';
+import React, {useEffect, useState} from 'react';
 import _Typography from "@material-ui/core/Typography";
 import { Button } from "@material-ui/core";
 import background from "../assets/background.png";
@@ -27,19 +27,28 @@ const Landing: React.FC<{}> = () => {
 
   let history = useHistory();
 
-  const handleConvert = () => {
-    history.push('/home');
+
+  const handleGoIn = () => {
+    history.push(`/home`);
   };
 
-  const index = Number(localStorage.getItem(lsKey));
-  localStorage.setItem(lsKey, String((index + 1) % effects.length));
+  const [ index, setIndex ] = useState();
+  useEffect(() => {
+    const lsIndex = Number(localStorage.getItem(lsKey));
+    localStorage.setItem(lsKey, String((lsIndex + 1) % effects.length));
+    setIndex(lsIndex);
+  }, []);
 
   return <Div>
     <div style={{width: '100%'}}>
-      <Typography variant="h4" className={`animate__animated animate__${effects[index]}`}>
-        Let's get started
-      </Typography>
-      <Button variant="contained" color="secondary" onClick={handleConvert}>Go in</Button>
+
+      {typeof index === 'number'?
+        <Typography variant="h4" className={`animate__animated animate__${effects[index]}`}>
+          Let's get started
+        </Typography>
+        : <Typography variant="h4">&nbsp;</Typography>}
+      <Button variant="contained" color="secondary" onClick={handleGoIn}>Go in</Button>
+
     </div>
   </Div>
 };
