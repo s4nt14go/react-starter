@@ -50,7 +50,7 @@ const Bar: React.FC<Props> = ({children, handleDrawerOpen, open}) => {
 
   const classes = useStyles();
 
-  const { user, isAuthenticated } = useAuth0();
+  const { user, isAuthenticated, isLoading } = useAuth0();
   console.log(user);
 
   return (
@@ -76,14 +76,16 @@ const Bar: React.FC<Props> = ({children, handleDrawerOpen, open}) => {
           Mini variant drawer
         </Typography>
 
-        {isAuthenticated?
-          <>
-            <Tooltip title={user.given_name || user.name}>
-              <Avatar alt={user.name} src={user.picture} />
-            </Tooltip>
-            <LogoutButton />
-          </>
-        : <LoginButton />}
+        {!isLoading && (
+          isAuthenticated?
+            <>
+              <Tooltip title={user.given_name || user.name}>
+                <Avatar alt={user.name} src={user.picture} />
+              </Tooltip>
+              <LogoutButton />
+            </>
+          : <LoginButton />
+        )}
 
       </Toolbar>
     </AppBar>

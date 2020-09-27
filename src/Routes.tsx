@@ -13,70 +13,77 @@ import {
 import Paragraphs from "./main/Paragraphs";
 import Landing from "./layout/Landing";
 import Site from "./layout/Site";
-
-const padding = {
-  padding: 24,
-};
+import PrivateRoute from "./component/PrivateRoute";
+import {useAuth0} from "@auth0/auth0-react";
+import Loading from "./component/Loading";
 
 export type Section = {
   to: string
   text: string
   icon: ReactElement
-  main: ReactElement
-  padding?: boolean
-  style?: any
+  component: React.FC
+  private?: boolean
 }
 
-export let sections: Section[] = [
+const allSections: Section[] = [
   {
     to: '/home',
     text: 'Home',
     icon: <ImHome3 />,
-    main: <Home style={padding} />,
+    component: Home,
   },
   {
     to: '/paragraphs',
     text: 'Paragraphs',
     icon: <GrTextAlignLeft />,
-    main: <Paragraphs style={padding} />,
+    component: Paragraphs,
   },
   {
     to: '/demo',
     text: 'Demo',
     icon: <FaReact />,
-    main: <Demo />
+    component: Demo,
+    private: true,
   },
 ];
-
+export let sections: Section[];
+export let defaultSection: Section;
 const Routes: React.FC<{}> = () => {
 
-  return (
+  const { isAuthenticated, isLoading } = useAuth0();
 
-    <Switch>
-      <Route path="/" exact>
-        <Landing />
-      </Route>
-      <Route>
-        <Site sections={sections}>
-          <Switch>
+  sections = allSections.filter(s => {
+    if (!s.private) return true;
+    return isAuthenticated;
+  });
+  defaultSection = sections[0];
 
-            {sections.map((section, _index) => (
-              <Route path={section.to} key={section.text}>
-                {section.main}
-              </Route>
-            ))}
+  return (<>
 
-            <Route path='/' key={defaultSection.text}>
-              {defaultSection.main}
-            </Route>
+    {isLoading && <Loading />}
 
-          </Switch>
-        </Site>
-      </Route>
-    </Switch>
+      <Switch>
+        <Route path="/" exact>
+          <Landing/>
+        </Route>
+        <Route>
+          <Site sections={sections}>
+            <Switch>
 
-  );
+              {sections.map((section, _index) => {
+                if (!section.private) return <Route path={section.to} key={section.text} component={section.component} />;
+                if (isAuthenticated) return <PrivateRoute component={section.component} path={section.to} key={section.text} />;
+                return null;
+              })}
+
+              <Route path='/' key={defaultSection.text} component={defaultSection.component} />;
+
+            </Switch>
+          </Site>
+        </Route>
+      </Switch>
+
+  </>);
 };
 
-export let defaultSection: Section = sections[0];
 export default Routes;

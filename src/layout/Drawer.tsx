@@ -14,6 +14,7 @@ import {
 import DrawerLink from "../component/DrawerLink";
 import {Section} from "../Routes";
 import Bar from './Bar';
+import {useAuth0} from "@auth0/auth0-react";
 
 const drawerWidth = 190;
 
@@ -62,6 +63,8 @@ const Drawer: React.FC<Props> = ({children, sections, toolbarClass}) => {
     setOpen(false);
   };
 
+  const { isAuthenticated } = useAuth0();
+
   return (<>
     <Bar handleDrawerOpen={handleDrawerOpen} open={open} />
 
@@ -85,11 +88,18 @@ const Drawer: React.FC<Props> = ({children, sections, toolbarClass}) => {
       </div>
       <Divider />
       <List>
-        {sections.map((section, _index) => (
-          <div key={section.text}>
-            <DrawerLink {...section} />
-          </div>
-        ))}
+
+        {sections.map((section, _index) => {
+          const component =
+            <div key={section.text}>
+              <DrawerLink {...section} />
+            </div>;
+
+          if (!section.private) return component;
+          if (isAuthenticated) return component;
+          return null;
+        })}
+
       </List>
     </DrawerMui>
 

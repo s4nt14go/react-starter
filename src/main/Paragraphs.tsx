@@ -1,12 +1,18 @@
 import React from "react";
 import {Typography} from "@material-ui/core";
+import {makeStyles} from "@material-ui/core/styles";
 
-type Props = {
-  style: object
-}
+const useStyles = makeStyles((theme) => ({
+  container: {
+    padding: theme.spacing(3),
+  },
+}));
 
-const Paragraphs: React.FC<Props> = ({style}) => {
-  return <div style={style}>
+const Paragraphs: React.FC<{}> = () => {
+
+  const classes = useStyles();
+
+  return <div className={classes.container}>
     <h2>Paragraphs</h2>
     <Typography paragraph>
       Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt
