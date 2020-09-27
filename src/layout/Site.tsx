@@ -7,6 +7,7 @@ import Drawer from './Drawer';
 const useStyles = makeStyles((theme) => ({
   root: {
     display: 'flex',
+    overflowX: 'auto',
   },
   toolbar: {
     display: 'flex',

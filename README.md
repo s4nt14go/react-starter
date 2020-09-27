@@ -26,18 +26,19 @@ Utilities included:
 
 ### Add Auth0 authentication - tag 1.2<br />
 ![tag 1.1](./demo/tag1.2.gif)<br /><br />
-Utilities included:
+As an example, we declared the route with the react demo page as private, these are the utilities included:
 * [Auth0](https://auth0.com) @auth0/auth0-react
+* [React syntax highlighter](https://github.com/react-syntax-highlighter/react-syntax-highlighter) react-syntax-highlighter
 
-Configuration:
+To reproduce this in your localhost you will have to configure it:
 1. Create your account in [Auth0](https://auth0.com)<br /><br />
 1. In your Auth0 dashboard create a new Application and choose Single Page Web App type. TIP: Generally, in Auth0 you create a tenant for every product you create, that way you can create multiple Applications (for example one for your mobile client an other for your web client) and APIs (for example to authenticate a service you may provide for your product) related to that specific product, so to keep things organized it may be convenient to create a tenant for this exercise, you can delete it afterwards.<br /><br />
 1. When we login in our app we use an argument `redirectUri` to indicate to which path will be taken once Auth0 authenticates our user data, in the other hand, 
-when we logout this is indicated with an argument `redirectTo`. In both cases we use `http://localhost:3000/home` so in your Auth0 dashboard in the Settings tab put into "Allowed Callback URLs":<br />
+when we logout this is indicated with an argument `redirectTo`. In both cases we use `http://localhost:3000/home` so in your Auth0 dashboard in the Settings tab put into **Allowed Callback URLs**:<br />
  `http://localhost:3000, http://localhost:3000/home`<br />
- ...into "Allowed Logout URLs":<br />
+ ...into **Allowed Logout URLs**:<br />
  `http://localhost:3000/home`<br />
- ...similary into "Allowed Web Origins":<br /> 
+ ...similarly into **Allowed Web Origins**:<br /> 
   `http://localhost:3000`<br />
   ...scroll to the end and click button Save Changes.<br />
 Of course, in the case you use an address different from `http://localhost:3000` to host your React app change accordingly.<br />  

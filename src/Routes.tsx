@@ -8,7 +8,7 @@ import {
 import {
   FaReact,
   ImHome3,
-  GrTextAlignLeft,
+  GrTextAlignLeft, FaUser,
 } from "react-icons/all";
 import Paragraphs from "./main/Paragraphs";
 import Landing from "./layout/Landing";
@@ -16,6 +16,7 @@ import Site from "./layout/Site";
 import PrivateRoute from "./component/PrivateRoute";
 import {useAuth0} from "@auth0/auth0-react";
 import Loading from "./component/Loading";
+import Profile from "./main/Profile";
 
 export type Section = {
   to: string
@@ -23,6 +24,7 @@ export type Section = {
   icon: ReactElement
   component: React.FC
   private?: boolean
+  menu: boolean
 }
 
 const allSections: Section[] = [
@@ -31,18 +33,29 @@ const allSections: Section[] = [
     text: 'Home',
     icon: <ImHome3 />,
     component: Home,
+    menu: true,
   },
   {
     to: '/paragraphs',
     text: 'Paragraphs',
     icon: <GrTextAlignLeft />,
     component: Paragraphs,
+    menu: true,
   },
   {
     to: '/demo',
     text: 'Demo',
     icon: <FaReact />,
     component: Demo,
+    menu: true,
+    private: true,
+  },
+  {
+    to: '/profile',
+    text: 'Profile',
+    icon: <FaUser />,
+    component: Profile,
+    menu: false,
     private: true,
   },
 ];
@@ -72,8 +85,7 @@ const Routes: React.FC<{}> = () => {
 
               {sections.map((section, _index) => {
                 if (!section.private) return <Route path={section.to} key={section.text} component={section.component} />;
-                if (isAuthenticated) return <PrivateRoute component={section.component} path={section.to} key={section.text} />;
-                return null;
+                return isAuthenticated? <PrivateRoute component={section.component} path={section.to} key={section.text} /> : null;
               })}
 
               <Route path='/' key={defaultSection.text} component={defaultSection.component} />;

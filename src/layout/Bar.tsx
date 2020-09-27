@@ -14,6 +14,7 @@ import {
 import {useAuth0} from "@auth0/auth0-react";
 import LogoutButton from "../component/LogoutButton";
 import LoginButton from "../component/LoginButton";
+import {useHistory} from "react-router-dom";
 
 const drawerWidth = 190;
 
@@ -49,7 +50,7 @@ type Props = {
 const Bar: React.FC<Props> = ({children, handleDrawerOpen, open}) => {
 
   const classes = useStyles();
-
+  const history = useHistory();
   const { user, isAuthenticated, isLoading } = useAuth0();
   console.log(user);
 
@@ -79,9 +80,11 @@ const Bar: React.FC<Props> = ({children, handleDrawerOpen, open}) => {
         {!isLoading && (
           isAuthenticated?
             <>
-              <Tooltip title={user.given_name || user.name}>
-                <Avatar alt={user.name} src={user.picture} />
-              </Tooltip>
+              <IconButton onClick={() => history.push('/profile')}>
+                <Tooltip title={user.given_name || user.name}>
+                  <Avatar alt={user.name} src={user.picture} />
+                </Tooltip>
+              </IconButton>
               <LogoutButton />
             </>
           : <LoginButton />

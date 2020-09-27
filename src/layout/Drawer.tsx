@@ -95,9 +95,9 @@ const Drawer: React.FC<Props> = ({children, sections, toolbarClass}) => {
               <DrawerLink {...section} />
             </div>;
 
+          if (!section.menu) return null;
           if (!section.private) return component;
-          if (isAuthenticated) return component;
-          return null;
+          return isAuthenticated? component : null;
         })}
 
       </List>
