@@ -43,7 +43,7 @@ when we logout this is indicated with an argument `redirectTo`. In both cases we
   ...scroll to the end and click button Save Changes.<br />
 Of course, in the case you use an address different from `http://localhost:3000` to host your React app change accordingly.<br />  
 Take note of the Domain and Client ID as you will use them next. Click on "Universal Login" in the side menu and select Experience type to New for an improved login page UI, scroll down and Save changes.<br /><br />
-1. Create a `.env.local` file inside the root folder (it is the same where `.gitignore` and `package.json` are located) and copy there this:<br />
+1. Create a `.env.local` file inside the root folder (it is the same where `.gitignore` and `package.json` are located) and copy there this:<br/>
     ```shell script
     REACT_APP_AUTH0_DOMAIN=<YOUR AUTH0 APP DATA>
     REACT_APP_AUTH0_CLIENTID=<YOUR AUTH0 APP DATA>
