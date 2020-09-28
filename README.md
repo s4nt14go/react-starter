@@ -11,7 +11,8 @@
 When starting a new project, we generally use the same libraries and it's helpful to have some examples of that bunch of libraries in a working project.<br /><br />
 In the different sections of this React app you will find examples of use for these libraries you can look into before you integrate them into your project.<br /><br />
 Click to check the [final result](https://react-starter-s4nt14go.netlify.app)!<br /><br />
-In the case you are only interested just in the first basics examples, you can checkout the different tags. 
+In the case you are only interested just in the first basics examples, you can checkout the different tags.<br /><br />
+**Take a look also at [branch auth0](https://github.com/s4nt14go/react-starter/tree/auth0)**, it starts with tag 1.0 and add authentication using Auth0<br /> 
 ### Material mini drawer layout - tag 1.0<br />
 ![tag 1.0](./demo/tag1.gif)<br /><br />
 Utilities included:
