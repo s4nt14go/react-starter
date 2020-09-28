@@ -9,7 +9,7 @@
 ### Description
 
 This start from tag 1.0 from master branch and add authentication using Auth0.<br /><br />
-✨ Click here to see the <a href="https://5f71368de1b91b0008675670--react-starter-s4nt14go.netlify.app" target="_blank">final result</a>! 
+✨ Click here to see the <a href="https://5f7141ce3200800007edadc2--react-starter-s4nt14go.netlify.app" target="_blank">final result</a>! 
 ### Material mini drawer layout - tag 1.0<br />
 ![tag 1.0](./demo/tag1.gif)<br /><br />
 Utilities included:
