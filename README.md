@@ -23,8 +23,8 @@ Utilities included:
 Utilities included:
 * [Animate.css](https://animate.style) animate.css
 
-### Auth0 authentication - tag 1.2<br />
-![tag 1.2](./demo/tag1.2.gif)<br /><br />
+### Auth0 authentication<br />
+![final](./demo/final.gif)<br /><br />
 As an example, we declared the route with the react demo page as private, these are the utilities included:
 * [Auth0](https://auth0.com) @auth0/auth0-react
 * [React syntax highlighter](https://github.com/react-syntax-highlighter/react-syntax-highlighter) react-syntax-highlighter
