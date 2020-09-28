@@ -31,8 +31,8 @@ Utilities included:
 Utilities included:
 * [Formik](https://formik.org) formik
 
-### Redux with persistence - tag 4.0<br />
-![tag 4.0](./demo/tag4.gif)<br /><br />
+### Redux with persistence<br />
+![final](./demo/final.gif)<br /><br />
 Utilities included:
 * [React Redux](https://react-redux.js.org) react-redux
 * [Reselect](https://github.com/reduxjs/reselect) reselect
