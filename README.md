@@ -10,7 +10,8 @@
 
 When starting a new project, we generally use the same libraries and it's helpful to have some examples of that bunch of libraries in a working project.<br /><br />
 In the different sections of this React app you will find examples of use for these libraries you can look into before you integrate them into your project.<br /><br />
-You can checkout different tags, each of them contains more utilities to fit your needs. The tags are useful in the case you are only interested in the first basics examples. 
+Click to check the [final result](https://react-starter-s4nt14go.netlify.app)!<br /><br />
+In the case you are only interested just in the first basics examples, you can checkout the different tags. 
 ### Material mini drawer layout - tag 1.0<br />
 ![tag 1.0](./demo/tag1.gif)<br /><br />
 Utilities included:
