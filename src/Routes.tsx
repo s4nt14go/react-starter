@@ -78,9 +78,11 @@ const Routes: React.FC<{}> = () => {
           <Landing/>
         </Route>
 
-        {isLoading && <Loading />}  {/* After Landing so it doesn't appear there */}
 
         <Route>
+
+          {isLoading && <Loading />}  {/* After Landing so it doesn't appear there and inside Route to see Site through Loading while we are waiting for Auth0 response */}
+
           <Site sections={sections}>
             <Switch>
 
