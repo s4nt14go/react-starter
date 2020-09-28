@@ -73,12 +73,13 @@ const Routes: React.FC<{}> = () => {
 
   return (<>
 
-    {isLoading && <Loading />}
-
       <Switch>
         <Route path="/" exact>
           <Landing/>
         </Route>
+
+        {isLoading && <Loading />}  {/* After Landing so it doesn't appear there */}
+
         <Route>
           <Site sections={sections}>
             <Switch>
