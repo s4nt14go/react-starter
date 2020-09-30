@@ -8,7 +8,7 @@ import {
 import {
   FaReact,
   ImHome3,
-  GrTextAlignLeft, FaUser,
+  GrTextAlignLeft, FaUser, AiFillApi,
 } from "react-icons/all";
 import Paragraphs from "./main/Paragraphs";
 import Landing from "./layout/Landing";
@@ -17,6 +17,7 @@ import PrivateRoute from "./component/PrivateRoute";
 import {useAuth0} from "@auth0/auth0-react";
 import Loading from "./component/Loading";
 import Profile from "./main/Profile";
+import Api from "./main/Api";
 
 export type Section = {
   to: string
@@ -56,6 +57,14 @@ export const sections: Section[] = [
     icon: <FaUser />,
     component: Profile,
     menu: false,    // Accessible clicking on user avatar in top bar
+    private: true,
+  },
+  {
+    to: '/api',
+    text: 'API',
+    icon: <AiFillApi />,
+    component: Api,
+    menu: true,
     private: true,
   },
 ];

@@ -47,4 +47,18 @@ Take note of the Domain and Client ID as you will use them next. Click on "Unive
     REACT_APP_AUTH0_DOMAIN=<YOUR AUTH0 APP DATA>
     REACT_APP_AUTH0_CLIENTID=<YOUR AUTH0 APP DATA>
     ```
-    TIP: Bear in mind that you need to restart your app in your terminal in order to get the new environment variables loaded.
+    TIP: Bear in mind that you need to restart your development server in the terminal in order to get the new environment variables loaded. This restart should be done every time you modify your `.env*` files.
+
+### Consume an API protected with authentication<br />
+We have to create an API in our Auth0 dashboard under the same tenant you used for the React app, so select in the side menu APIs and click on "Create API", fill Name and Identifier fields, take note of the Identifier as this is what we will need to put as **audience** in our apps.
+To try this out we will need a backend, so clone [this](https://github.com/auth0-samples/auth0-react-samples), we will use the server from it. Rename file `Sample-01/src/auth_config.json.example` to `auth_config.json` and fill it with you Auth0 data:
+1.  `domain` and `clientId` come from the Application you configured in your Auth0 dashboard.
+1. ...while `audience` is the API Identifier.
+1. `cd` into `Sample-01` folder and run `npm i && node api-server.js`
+1. Once done the backend part add in your `.env.local`:
+    ```shell script
+    REACT_APP_AUTH0_AUDIENCE=<YOUR AUTH0 API INDENTIFIER/AUDIENCE>
+    REACT_APP_API_ENDPOINT=http://localhost:3001/api/external
+    ```
+   
+After doing the previous steps you should be able to fetch the protected API.
