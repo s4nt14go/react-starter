@@ -27,7 +27,7 @@ export type Section = {
   menu: boolean
 }
 
-const allSections: Section[] = [
+export const sections: Section[] = [
   {
     to: '/home',
     text: 'Home',
@@ -55,21 +55,16 @@ const allSections: Section[] = [
     text: 'Profile',
     icon: <FaUser />,
     component: Profile,
-    menu: false,
+    menu: false,    // Accessible clicking on user avatar in top bar
     private: true,
   },
 ];
-export let sections: Section[];
-export let defaultSection: Section;
+export const defaultSection = sections[0];
 const Routes: React.FC<{}> = () => {
 
-  const { isAuthenticated, isLoading } = useAuth0();
+  const { isLoading } = useAuth0();
 
-  sections = allSections.filter(s => {
-    if (!s.private) return true;
-    return isAuthenticated;
-  });
-  defaultSection = sections[0];
+  if (isLoading) return <Loading />;
 
   return (<>
 
@@ -78,17 +73,13 @@ const Routes: React.FC<{}> = () => {
           <Landing/>
         </Route>
 
-
         <Route>
-
-          {isLoading && <Loading />}  {/* After Landing so it doesn't appear there and inside Route to see Site through Loading while we are waiting for Auth0 response */}
-
           <Site sections={sections}>
             <Switch>
 
               {sections.map((section, _index) => {
                 if (!section.private) return <Route path={section.to} key={section.text} component={section.component} />;
-                return isAuthenticated? <PrivateRoute component={section.component} path={section.to} key={section.text} /> : null;
+                return <PrivateRoute component={section.component} path={section.to} key={section.text} />;
               })}
 
               <Route path='/' key={defaultSection.text} component={defaultSection.component} />;

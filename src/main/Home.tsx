@@ -1,5 +1,4 @@
 import React from "react";
-import {useAuth0} from "@auth0/auth0-react";
 import {makeStyles} from "@material-ui/core/styles";
 
 const useStyles = makeStyles((theme) => ({
@@ -11,9 +10,6 @@ const useStyles = makeStyles((theme) => ({
 const Home: React.FC<{}> = () => {
 
   const classes = useStyles();
-
-  const { user } = useAuth0();
-  console.log(user);
 
   return <div className={classes.container}>
     <h2>Home</h2>

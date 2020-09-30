@@ -52,7 +52,6 @@ const Bar: React.FC<Props> = ({children, handleDrawerOpen, open}) => {
   const classes = useStyles();
   const history = useHistory();
   const { user, isAuthenticated, isLoading } = useAuth0();
-  console.log(user);
 
   return (
     <AppBar
