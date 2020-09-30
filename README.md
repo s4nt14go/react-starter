@@ -11,7 +11,7 @@
 This start from tag 1.0 from master branch and add authentication using Auth0.<br /><br />
 ✨ Click here to see the [final result](https://5f748aec52240000077adc09--react-starter-s4nt14go.netlify.app)! 
 ### Material mini drawer layout - tag 1.0<br />
-![tag 1.0](./demo/tag1.gif)<br /><br />
+![tag 1.0](./showcase/tag1.gif)<br /><br />
 Utilities included:
 * [Material UI](https://material-ui.com) @material-ui/core
 * [React router](https://reactrouter.com/web) react-router-dom
@@ -19,12 +19,12 @@ Utilities included:
 * [React icons](https://react-icons.netlify.com) react-icons
 
 ### Landing page - tag 1.1<br />
-![tag 1.1](./demo/tag1.1.gif)<br /><br />
+![tag 1.1](./showcase/tag1.1.gif)<br /><br />
 Utilities included:
 * [Animate.css](https://animate.style) animate.css
 
 ### Auth0 authentication<br />
-![final](./demo/final.gif)<br /><br />
+![final](./showcase/final.gif)<br /><br />
 As an example, we declared the route with the react demo page as private, these are the utilities included:
 * [Auth0](https://auth0.com) @auth0/auth0-react
 * [React syntax highlighter](https://github.com/react-syntax-highlighter/react-syntax-highlighter) react-syntax-highlighter
@@ -50,6 +50,10 @@ Take note of the Domain and Client ID as you will use them next. Click on "Unive
     TIP: Bear in mind that you need to restart your development server in the terminal in order to get the new environment variables loaded. This restart should be done every time you modify your `.env*` files.
 
 ### Consume an API protected with authentication<br />
+<p align="center">
+  <img src="./showcase/protectedApi.png" alt="Protected API" />
+</p><br />
+
 We have to create an API in our Auth0 dashboard under the same tenant you used for the React app, so select in the side menu APIs and click on "Create API", fill Name and Identifier fields, take note of the Identifier as this is what we will need to put as **audience** in our apps.
 To try this out we will need a backend, so clone [this](https://github.com/auth0-samples/auth0-react-samples), we will use the server from it. Rename file `Sample-01/src/auth_config.json.example` to `auth_config.json` and fill it with you Auth0 data:
 1.  `domain` and `clientId` come from the Application you configured in your Auth0 dashboard.
