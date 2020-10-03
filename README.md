@@ -9,7 +9,7 @@
 ### Description
 
 This starts from tag 1.0 of master branch and add authentication using Auth0.<br /><br />
-✨ Click here to see the [final result](https://5f748aec52240000077adc09--react-starter-s4nt14go.netlify.app)! 
+✨ Click here to see the [final result](https://5f78746ec2c10c83b073ffc0--react-starter-s4nt14go.netlify.app)! 
 ### Material mini drawer layout - tag 1.0<br />
 ![tag 1.0](./showcase/tag1.gif)<br /><br />
 Utilities included:
@@ -67,4 +67,4 @@ To try this out we will need a backend, so clone [this](https://github.com/auth0
    
 After doing the previous steps you should be able to fetch the protected API.
 
-`Note:` This last part is not shown in the "final result" link showed at the top because I should deploy this backend online, as soon as I have the time I will. Stay tuned!   
+`Note:` In the case you would like to implement your API serverlessly check [api-gateway-auth0](https://github.com/s4nt14go/api-gateway-auth0)   
