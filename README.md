@@ -41,7 +41,7 @@ Utilities included:
 
 1. Clone the repo and `cd` into<br /><br />
 `git clone https://github.com/s4nt14go/react-starter`<br /><br />
-1. (Optional) In the case you are want to checkout one of the intermediary tags you can do it with the following command, which also starts your own branch<br /><br />
+1. (Optional) In the case you want to checkout one of the intermediary tags you can do it with the following command, which also starts your own branch<br /><br />
 `git checkout tags/2.0 -b my-branch`<br /><br />
 You have to replace the tag number for the one you want.<br /><br />
 1. Install dependencies<br /><br />
