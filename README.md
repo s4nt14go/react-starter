@@ -10,6 +10,8 @@
 
 This starts from tag 1.0 of master branch and add authentication using Auth0.<br /><br />
 ✨ Click here to see the [final result](https://5f78746ec2c10c83b073ffc0--react-starter-s4nt14go.netlify.app)!<br /><br />
+For the backend code which implements a custom authenticator for the API Gateway endpoint using Auth0 check [this repo](https://github.com/s4nt14go/api-gateway-auth0). 
+
 In the case you would like to do the authentication using [AWS Cognito](https://aws.amazon.com/cognito) you can check [repo react-cognito](https://github.com/s4nt14go/react-cognito) 
 ### Material mini drawer layout - tag 1.0<br />
 ![tag 1.0](./showcase/tag1.gif)<br /><br />
