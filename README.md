@@ -60,7 +60,7 @@ Of course, in the case you use an address different from `http://localhost:3000`
    
 ## Installation instructions
 
-Use same Node 14 version, using [nvm](https://github.com/nvm-sh/nvm) you can:
+Use Node 14 version, using [nvm](https://github.com/nvm-sh/nvm) you can:
 
 ```
 # set Node 14 in current terminal
