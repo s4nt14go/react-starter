@@ -4,7 +4,7 @@
 # “command” is your build command.
 [build]
   base    = ""
-  publish = "public"
+  publish = "build"
   command = "npm run build"
 
 # Always redirect any request to our index.html
