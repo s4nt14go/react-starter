@@ -1,4 +1,7 @@
 <h1 align="center">React starter with drawer menu and then some ⛵ </h1>
+<a href="https://app.netlify.com/sites/react-starter-s4nt14go/deploys">
+  <img src="https://api.netlify.com/api/v1/badges/34293617-ab62-4b61-a6e5-630a044b3e10/deploy-status" />
+</a>
 
 ### Description
 
