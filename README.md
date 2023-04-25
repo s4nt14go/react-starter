@@ -1,10 +1,4 @@
 <h1 align="center">React starter with drawer menu and then some ⛵ </h1>
-<p>
-  <img alt="Version" src="https://img.shields.io/badge/version-1.0.0-blue.svg?cacheSeconds=2592000" />
-  <a href="#" target="_blank">
-    <img alt="License: ISC" src="https://img.shields.io/badge/License-ISC-yellow.svg" />
-  </a>
-</p>
 
 ### Description
 
@@ -39,12 +33,19 @@ Utilities included:
 
 ### Instructions
 
+1. Use Node 14 version, using [nvm](https://github.com/nvm-sh/nvm) you can:
+```
+# set Node 14 in current terminal
+nvm use 14
+# set Node 14 as default (new terminals will use 14)
+nvm alias default 14
+```
 1. Clone the repo and `cd` into<br /><br />
 `git clone https://github.com/s4nt14go/react-starter`<br /><br />
 1. (Optional) In the case you want to checkout one of the intermediary tags you can do it with the following command, which also starts your own branch<br /><br />
 `git checkout tags/2.0 -b my-branch`<br /><br />
 You have to replace the tag number for the one you want.<br /><br />
 1. Install dependencies<br /><br />
-`npm i`<br /><br />
+`npm ci`<br /><br />
 1. Run the project<br /><br />
 `npm start`
